@@ -1,0 +1,78 @@
+from flask import render_template, request, redirect, url_for
+from app import app
+from models import db, Memo
+
+
+# ==============================================================================
+# ルーティング
+# ==============================================================================
+# 一覧表示
+@app.route("/memo/")
+def index():
+    # メモ全件取得
+    memos = Memo.query.all()
+    # 画面遷移
+    return render_template("index.html", memos=memos)
+
+
+# 新規作成
+@app.route("/memo/new", methods=["GET", "POST"])
+def create():
+    if request.method == "POST":
+        # フォームの入力値を取得
+        title = request.form["title"]
+        content = request.form["content"]
+        # メモを新規作成
+        memo = Memo(title=title, content=content)
+        # データベースに保存
+        db.session.add(memo)
+        db.session.commit()
+        # 一覧画面にリダイレクト
+        return redirect(url_for("index"))
+    else:
+        # 画面遷移
+        return render_template("create.html")
+
+
+# 更新
+@app.route("/memo/update/<int:memo_id>", methods=["GET", "POST"])
+def update(memo_id):
+    # メモを取得, 存在しない場合は404エラーを返す
+    memo = Memo.query.get_or_404(memo_id)
+    # POSTメソッドの場合
+    if request.method == "POST":
+        # フォームの入力値を取得
+        memo.title = request.form["title"]
+        memo.content = request.form["content"]
+        # データベースに保存
+        db.session.commit()
+        # 一覧画面にリダイレクト
+        return redirect(url_for("index"))
+    # GETメソッドの場合
+    else:
+        # 画面遷移
+        return render_template("update.html", memo=memo)
+
+
+# 削除
+@app.route("/memo/delete/<int:memo_id>")
+def delete(memo_id):
+    # メモを取得, 存在しない場合は404エラーを返す
+    memo = Memo.query.get_or_404(memo_id)
+    # データベースから削除
+    db.session.delete(memo)
+    db.session.commit()
+    # 一覧画面にリダイレクト
+    return redirect(url_for("index"))
+
+
+# 循環インポートを回避するため、エラーハンドリングはここでインポートする
+from werkzeug.exceptions import NotFound
+
+
+# 404エラーハンドリング
+@app.errorhandler(NotFound)
+def show_404_page(error):
+    msg = error.description
+    print("エラー内容：", msg)
+    return render_template("errors/404.html", msg=msg), 404
