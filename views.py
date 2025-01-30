@@ -1,6 +1,7 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from app import app
 from models import db, Memo
+from forms import MemoForm
 
 
 # ==============================================================================
@@ -15,43 +16,53 @@ def index():
     return render_template("index.html", memos=memos)
 
 
-# 新規作成
-@app.route("/memo/new", methods=["GET", "POST"])
+# 新規作成(Formクラスを使用)
+@app.route("/memo/create", methods=["GET", "POST"])
 def create():
-    if request.method == "POST":
+    # フォームの生成
+    form = MemoForm()
+    # POSTメソッドの場合
+    if form.validate_on_submit():
         # フォームの入力値を取得
-        title = request.form["title"]
-        content = request.form["content"]
+        title = form.title.data
+        content = form.content.data
         # メモを新規作成
         memo = Memo(title=title, content=content)
         # データベースに保存
         db.session.add(memo)
         db.session.commit()
+        # フラッシュメッセージを設定
+        flash("メモを新規作成しました")
         # 一覧画面にリダイレクト
         return redirect(url_for("index"))
     else:
         # 画面遷移
-        return render_template("create.html")
+        return render_template("create_form.html", form=form)
 
 
-# 更新
+# 更新(Formクラスを使用)
 @app.route("/memo/update/<int:memo_id>", methods=["GET", "POST"])
 def update(memo_id):
     # メモを取得, 存在しない場合は404エラーを返す
-    memo = Memo.query.get_or_404(memo_id)
+    target_data = Memo.query.get_or_404(memo_id)
+    # Formに入れ替え
+    form = MemoForm(obj=target_data)
+
     # POSTメソッドの場合
-    if request.method == "POST":
+    if request.method == "POST" and form.validate():
         # フォームの入力値を取得
-        memo.title = request.form["title"]
-        memo.content = request.form["content"]
+        target_data.title = form.title.data
+        target_data.content = form.content.data
         # データベースに保存
         db.session.commit()
+        # フラッシュメッセージを設定
+        flash("メモを更新しました")
         # 一覧画面にリダイレクト
         return redirect(url_for("index"))
     # GETメソッドの場合
     else:
         # 画面遷移
-        return render_template("update.html", memo=memo)
+        return render_template("update_form.html", form=form, edit_id=target_data.id)
 
 
 # 削除
@@ -62,6 +73,8 @@ def delete(memo_id):
     # データベースから削除
     db.session.delete(memo)
     db.session.commit()
+    # フラッシュメッセージを設定
+    flash("メモを削除しました")
     # 一覧画面にリダイレクト
     return redirect(url_for("index"))
 
