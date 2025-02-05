@@ -6,21 +6,6 @@ from flask_login import UserMixin
 db = SQLAlchemy()
 
 
-# ==============================================================================
-# モデルの定義
-# ==============================================================================
-# メモ
-class Memo(db.Model):
-    # テーブル名
-    __tablename__ = "memos"
-    # ID(PK)
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    # タイトル(NULLを許可しない)
-    title = db.Column(db.String(50), nullable=False)
-    # 内容
-    content = db.Column(db.Text)
-
-
 # ユーザ
 class User(UserMixin, db.Model):
     # テーブル名
@@ -42,18 +27,18 @@ class User(UserMixin, db.Model):
 
 
 # ゲーム情報
-# class Game(db.Model):
-#     # テーブル名
-#     __tablename__ = "games"
-#     # APPID(PK)
-#     appid = db.Column(db.Integer, primary_key=True)
-#     # ゲームタイトル(NULLを許可しない)
-#     name = db.Column(db.String(50), nullable=False)
-#     # ゲーム発売元
-#     publisher = db.Column(db.String(50))
-#     # ゲーム詳細
-#     short_description = db.Column(db.Text)
-#     # 映像のリンク
-#     videos = db.Column(db.Text)
-#     # サムネイルのリンク
-#     thumbnails = db.Column(db.Text)
+class Game(db.Model):
+    # テーブル名
+    __tablename__ = "games"
+    # APPID(PK)
+    appid = db.Column(db.Integer, primary_key=True)
+    # ゲームタイトル(NULLを許可しない)
+    name = db.Column(db.String(50), nullable=False)
+    # ゲーム発売元
+    publisher = db.Column(db.String(50))
+    # ゲーム詳細
+    short_description = db.Column(db.Text)
+    # 映像のリンク
+    videos = db.Column(db.Text)
+    # サムネイルのリンク
+    thumbnails = db.Column(db.Text)

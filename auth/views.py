@@ -25,8 +25,8 @@ def login():
         if user is not None and user.check_password(password):
             # ログイン処理
             login_user(user)
-            # メモ一覧画面にリダイレクト
-            return redirect(url_for("memo.index"))
+            # ゲーム検索画面にリダイレクト
+            return redirect(url_for("game.search"))
         # 失敗
         flash("認証不備です")
     # GETメソッドの場合

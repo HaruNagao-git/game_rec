@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="my-4">ゲーム一覧</h1>
+    {% if games==[] %}
+        <p>ゲームは登録されていません</p>
+    {% else %}
+        <ul class="list-group mb-4">
+            {% for game in games %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ game.name }}
+                    <div>
+                        <a href="{{url_for('game.result', appid=game.appid)}}" class="btn btn-warning btn-sm">詳細</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <!--Flashメッセージ-->
+    {% for message in get_flashed_messages() %}
+        <div class="alart alert-info" role="info">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <a href="{{url_for('game.search')}}" class="btn btn-primary">検索画面に戻る</a>
+{% endblock %}

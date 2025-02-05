@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block header %}
+<style>
+    /* 背景画像フィルター */
+    .over img:first-child {
+        filter: blur(25px);
+        object-fit: cover;
+        opacity: 0.8;
+        transform: scale(1.5);
+        width: 100%;
+        height: auto;
+    }
+    
+    /* 中央寄せ */
+    .over img:last-child {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+        width: 45%;
+        height: auto;
+    }
+    
+    /* 表示画像比率 */
+    .over {
+        aspect-ratio: 18 / 3.5;
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+    }
+    .center-block {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+</style>
+{% endblock %}
+{% block navbar %}
+<li class="nav-item">
+    <a class="nav-link" href="{{url_for('game.index', appid=appid)}}">一覧に戻る</a>
+{% endblock %}
+{% block header_image %}
+{% if game!=[] and game.thumbnails!=[] %}
+    <div class="image-container">
+        <div class="over">
+            <img src="{{game.thumbnails['header']}}">
+            <img src="{{game.thumbnails['header']}}">
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if game!=[] %}
+    <div class="container">
+        <h2 class="my-4">{{game.name}}</h2>
+        <p>{{game.short_description}}</p>
+        <br>
+        {% if game.videos!=[] %}
+            <div class="text-center">
+                <video id="movie" class="mb-4" src="{{game.videos[0]['video_max']}}" poster="{{game.videos[0]['thumbnail']}}" type="video/webm" style="width: 65%; height: auto;" controls allowfullscreen></video>
+                <hr>
+                <h3 class="mt-2">再生する動画を選択</h3>
+                <div class="d-flex justify-content-center flex-wrap">
+                    {% for i in range(game.videos|length) %}
+                        <button class="btn btn-link p-0 m-2" onclick="playVideo('{{i}}', '{{game.appid}}')">
+                            <img src="{{game.videos[i]['thumbnail']}}" class="img-thumbnail" width="144px">
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endif %}
+<a href="{{url_for('game.index', appid=appid)}}" class="btn btn-primary">一覧に戻る</a>
+<script>
+    function playVideo(videoid, appid) {
+        fetch("{{url_for('game.get_video')}}",{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'videoid': parseInt(videoid),
+                'appid': parseInt(appid)
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const videoElement = document.getElementById('movie');
+            videoElement.src = data.video_max;
+            videoElement.poster = data.thumbnail;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+{% endblock %}

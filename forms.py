@@ -1,31 +1,31 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField, IntegerField, PasswordField
+from wtforms import StringField, SubmitField, IntegerField, PasswordField
 from wtforms.validators import DataRequired, Length, ValidationError
-from models import Memo, User
+from models import Game, User
 
 
 # ==============================================================================
 # Formクラス
 # ==============================================================================
 # メモ用入力クラス
-class MemoForm(FlaskForm):
-    # タイトル
-    title = StringField(
-        "タイトル：",
-        validators=[DataRequired("タイトルは必須入力です"), Length(max=50, message="50文字以内で入力してください")],
-    )
-    # 内容
-    content = TextAreaField("内容：")
-    # 送信ボタン
-    submit = SubmitField("送信")
+# class MemoForm(FlaskForm):
+#     # タイトル
+#     title = StringField(
+#         "タイトル：",
+#         validators=[DataRequired("タイトルは必須入力です"), Length(max=50, message="50文字以内で入力してください")],
+#     )
+#     # 内容
+#     content = TextAreaField("内容：")
+#     # 送信ボタン
+#     submit = SubmitField("送信")
 
-    # タイトルの重複チェック
-    def validate_title(self, title):
-        # StringFieldのdata属性で入力値を取得
-        memo = Memo.query.filter_by(title=title.data).first()
-        # タイトルが重複していないかチェック
-        if memo:
-            raise ValidationError(f"タイトル'{title.data}'は既に存在します。別のタイトルを入力してください")
+#     # タイトルの重複チェック
+#     def validate_title(self, title):
+#         # StringFieldのdata属性で入力値を取得
+#         memo = Memo.query.filter_by(title=title.data).first()
+#         # タイトルが重複していないかチェック
+#         if memo:
+#             raise ValidationError(f"タイトル'{title.data}'は既に存在します。別のタイトルを入力してください")
 
 
 # ログイン用入力クラス
@@ -69,11 +69,18 @@ class SignUpForm(LoginForm):
 
 
 # ゲーム検索用入力クラス
-# class GameForm(FlaskForm):
-#     # APPID
-#     appid = IntegerField(
-#         "タイトル：",
-#         validators=[DataRequired("IDは必須入力です")],
-#     )
-#     # 送信ボタン
-#     submit = SubmitField("送信")
+class GameForm(FlaskForm):
+    # APPID
+    appid = IntegerField(
+        "APPID：",
+        validators=[DataRequired("IDは必須入力です")],
+    )
+    # 検索ボタン
+    submit = SubmitField("検索")
+
+    # カスタムバリデータ
+    def validate_game(self, appid):
+        # APPIDに対応しているゲームが登録されているかチェック
+        game = Game.query.filter(appid=appid.data).all()
+        if not game:
+            raise ValidationError(f"APPID'{appid.data}'のゲームは存在しません。別のAPPIDを入力してください")

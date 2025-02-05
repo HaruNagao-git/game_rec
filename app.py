@@ -3,7 +3,7 @@ from flask_migrate import Migrate
 from models import db, User
 from flask_login import LoginManager
 from auth.views import auth_bp
-from memo.views import memo_bp
+from game.views import game_bp
 
 # ==============================================================================
 # Flask
@@ -25,7 +25,7 @@ login_manager.login_message = "認証していません：ログインしてく�
 login_manager.login_view = "auth.login"
 # ブループリントの登録
 app.register_blueprint(auth_bp)
-app.register_blueprint(memo_bp)
+app.register_blueprint(game_bp)
 
 
 @login_manager.user_loader
