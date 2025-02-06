@@ -33,6 +33,10 @@ def search():
 def index(appid):
     # 一致するゲーム情報を全取得
     games = Game.query.filter(Game.appid == appid).all()
+    for game in games:
+        # videos, thumbnailsを辞書型に変換
+        game.videos = ast.literal_eval(game.videos)
+        game.thumbnails = ast.literal_eval(game.thumbnails)
     # 画面遷移
     return render_template("game/index.html", games=games)
 

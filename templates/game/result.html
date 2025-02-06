@@ -69,9 +69,43 @@
                 </div>
             </div>
         {% endif %}
+        {% if game.thumbnails!=[] %}
+            <div class="text-center">
+                <hr>
+                <h3 class="mt-2">スクリーンショット</h3>
+                <div class="d-flex justify-content-center flex-wrap">
+                    {% for screenshot in game.thumbnails['screenshots'] %}
+                        <img src="{{screenshot}}" class="img-thumbnail m-1" style="width: 200px; height: auto; object-fit: contain;" onclick="showModal('{{screenshot}}')">
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endif %}
+<!-- モーダルウィンドウ -->
+<div class="modal fade" id="screenshotModal" tabindex="-1" aria-labelledby="screenshotModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="screenshotModalLabel">スクリーンショット</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" src="" class="img-thumbnail" style="width: 100%; height: auto;">
+            </div>
+        </div>
+    </div>
+</div>
 <a href="{{url_for('game.index', appid=appid)}}" class="btn btn-primary">一覧に戻る</a>
+
+<script>
+    function showModal(src) {
+        const modalImage = document.getElementById('modalImage');
+        modalImage.src = src;
+        const modal = new bootstrap.Modal(document.getElementById('screenshotModal'));
+        modal.show();
+    }
+</script>
 <script>
     function playVideo(videoid, appid) {
         fetch("{{url_for('game.get_video')}}",{

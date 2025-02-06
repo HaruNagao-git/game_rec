@@ -7,12 +7,14 @@
     {% else %}
         <ul class="list-group mb-4">
             {% for game in games %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ game.name }}
-                    <div>
-                        <a href="{{url_for('game.result', appid=game.appid)}}" class="btn btn-warning btn-sm">詳細</a>
+                <a href="{{url_for('game.result', appid=game.appid)}}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <img src="{{game.thumbnails['header']}}" alt="header_image" class="img-thumbnail" style="width: 250px; height: auto;">
+                        <span class="ms-3" style="font-size: 1.2em;">
+                            {{game.name}}
+                        </span>
                     </div>
-                </li>
+                </a>
             {% endfor %}
         </ul>
     {% endif %}
