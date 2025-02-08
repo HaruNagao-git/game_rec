@@ -32,12 +32,47 @@
         margin-left: 10%;
         margin-right: 10%;
     }
+    /* 動画リストのスタイル */
+    .video-list {
+        display: flex;
+        flex-direction: row;
+        overflow-y: auto;
+        flex-wrap: wrap;
+        max-height: 400px;
+    }
+    /* スマホなど細長い画面の時のスタイル */
+    @media (max-width: 768px) {
+        .video-list {
+            flex-direction: row;
+            overflow-x: auto;
+            max-height: none;
+            flex-wrap: nowrap;
+        }
+        .video-list button {
+            flex: 0 0 auto;
+            display: inline-block;
+        }
+    }
+    /* スクリーンショットのスタイル */
+    .screenshot_list {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        max-height: none;
+    }
+    /* モーダルウィンドウのスタイル */
+    .modal-content {
+        background-color: #333;
+        color: white;
+    }
 </style>
 {% endblock %}
+
 {% block navbar %}
 <li class="nav-item">
     <a class="nav-link" href="{{url_for('game.index', appid=appid)}}">一覧に戻る</a>
 {% endblock %}
+
 {% block header_image %}
 {% if game!=[] and game.thumbnails!=[] %}
     <div class="image-container">
@@ -56,24 +91,27 @@
         <p>{{game.short_description}}</p>
         <br>
         {% if game.videos!=[] %}
-            <div class="text-center">
-                <video id="movie" class="mb-4" src="{{game.videos[0]['video_max']}}" poster="{{game.videos[0]['thumbnail']}}" type="video/webm" style="width: 65%; height: auto;" controls allowfullscreen></video>
-                <hr>
-                <h3 class="mt-2">再生する動画を選択</h3>
-                <div class="d-flex justify-content-center flex-wrap">
-                    {% for i in range(game.videos|length) %}
-                        <button class="btn btn-link p-0 m-2" onclick="playVideo('{{i}}', '{{game.appid}}')">
-                            <img src="{{game.videos[i]['thumbnail']}}" class="img-thumbnail" width="144px">
-                        </button>
-                    {% endfor %}
+            <div class="row">
+                <div class="col-lg-7 col-md-12 text-center">
+                    <video id="movie" class="mb-4" src="{{game.videos[0]['video_max']}}" poster="{{game.videos[0]['thumbnail']}}" type="video/webm" style="width: 100%; height: auto;" controls allowfullscreen></video>
+                </div>
+                <div class="col-lg-5 col-md-12 text-center">
+                    <h4 class="mt-2">再生する動画を選択</h4>
+                    <div class="video-list d-flex justify-content-center">
+                        {% for i in range(game.videos|length) %}
+                            <button class="btn btn-link p-0 m-0" onclick="playVideo('{{i}}', '{{game.appid}}')">
+                                <img src="{{game.videos[i]['thumbnail']}}" class="img-thumbnail" width="200px" height="auto">
+                            </button>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         {% endif %}
         {% if game.thumbnails!=[] %}
             <div class="text-center">
                 <hr>
-                <h3 class="mt-2">スクリーンショット</h3>
-                <div class="d-flex justify-content-center flex-wrap">
+                <h4 class="mt-2">スクリーンショット</h4>
+                <div class="screenshot_list">
                     {% for screenshot in game.thumbnails['screenshots'] %}
                         <img src="{{screenshot}}" class="img-thumbnail m-1" style="width: 200px; height: auto; object-fit: contain;" onclick="showModal('{{screenshot}}')">
                     {% endfor %}
@@ -83,7 +121,7 @@
     </div>
 {% endif %}
 <!-- モーダルウィンドウ -->
-<div class="modal fade" id="screenshotModal" tabindex="-1" aria-labelledby="screenshotModalLabel" aria-hidden="true">
+<div class="modal_control modal fade" id="screenshotModal" tabindex="-1" aria-labelledby="screenshotModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">

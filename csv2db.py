@@ -4,7 +4,7 @@ import csv
 # gameテーブルが存在しない場合に実行してください
 
 
-def csv2db():
+def csv2table():
     # games.dbを作成し、接続（すでに存在する場合は接続のみ）
     con = sqlite3.connect("instance/gamedb.sqlite")
     cur = con.cursor()
@@ -39,4 +39,4 @@ def csv2db():
 
 
 if __name__ == "__main__":
-    csv2db()
+    csv2table()
