@@ -38,6 +38,7 @@
         flex-direction: row;
         overflow-y: auto;
         flex-wrap: wrap;
+        justify-content: center;
         max-height: 400px;
     }
     /* スマホなど細長い画面の時のスタイル */
@@ -47,6 +48,7 @@
             overflow-x: auto;
             max-height: none;
             flex-wrap: nowrap;
+            justify-content: flex-start;
         }
         .video-list button {
             flex: 0 0 auto;
@@ -97,10 +99,10 @@
                 </div>
                 <div class="col-lg-5 col-md-12 text-center">
                     <h4 class="mt-2">再生する動画を選択</h4>
-                    <div class="video-list d-flex justify-content-center">
+                    <div class="video-list">
                         {% for i in range(game.videos|length) %}
                             <button class="btn btn-link p-0 m-0" onclick="playVideo('{{i}}', '{{game.appid}}')">
-                                <img src="{{game.videos[i]['thumbnail']}}" class="img-thumbnail" width="200px" height="auto">
+                                <img src="{{game.videos[i]['thumbnail']}}" class="img-thumbnail" width="245px" height="auto">
                             </button>
                         {% endfor %}
                     </div>
@@ -113,7 +115,7 @@
                 <h4 class="mt-2">スクリーンショット</h4>
                 <div class="screenshot_list">
                     {% for screenshot in game.thumbnails['screenshots'] %}
-                        <img src="{{screenshot}}" class="img-thumbnail m-1" style="width: 200px; height: auto; object-fit: contain;" onclick="showModal('{{screenshot}}')">
+                        <img src="{{screenshot}}" class="img-thumbnail m-1" style="width: 245px; height: auto; object-fit: contain;" onclick="showModal('{{screenshot}}')">
                     {% endfor %}
                 </div>
             </div>
