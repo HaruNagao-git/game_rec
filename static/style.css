@@ -1,0 +1,61 @@
+/* 背景画像フィルター */
+.over img:first-child {
+    filter: blur(25px);
+    object-fit: cover;
+    opacity: 0.8;
+    transform: scale(1.5);
+    width: 100%;
+    height: auto;
+}
+
+/* 中央寄せ */
+.over img:last-child {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 45%;
+    height: auto;
+}
+
+/* 表示画像比率 */
+.over {
+    aspect-ratio: 18 / 3.5;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+.center-block {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+/* 動画リストのスタイル */
+.video-list {
+    display: flex;
+    flex-direction: row;
+    overflow-y: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-height: 400px;
+}
+/* スマホなど細長い画面の時のスタイル */
+@media (max-width: 768px) {
+    .video-list {
+        flex-direction: row;
+        overflow-x: auto;
+        max-height: none;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+    }
+    .video-list button {
+        flex: 0 0 auto;
+        display: inline-block;
+    }
+}
+/* スクリーンショットのスタイル */
+.screenshot_list {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    max-height: none;
+}
