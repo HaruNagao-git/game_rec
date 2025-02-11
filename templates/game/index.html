@@ -19,10 +19,7 @@
         </ul>
     {% endif %}
     <!--Flashメッセージ-->
-    {% for message in get_flashed_messages() %}
-        <div class="alart alert-info" role="info">
-            {{ message }}
-        </div>
-    {% endfor %}
+    {% from 'components/flash.html' import flash %}
+    {{ flash(get_flashed_messages()) }}
     <a href="{{url_for('game.search')}}" class="btn btn-primary">検索画面に戻る</a>
 {% endblock %}

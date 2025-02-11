@@ -1,15 +1,12 @@
 {% extends 'base.html' %}
 
-{% block header %}
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
-{% endblock %}
-
 {% block navbar %}
 <li class="nav-item">
     <a class="nav-link" href="{{url_for('game.index', appid=appid)}}">一覧に戻る</a>
 {% endblock %}
 
 {% block header_image %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
 {% if game!=[] and game.thumbnails!=[] %}
     <div class="image-container">
         <div class="over">
@@ -57,22 +54,11 @@
     </div>
 {% endif %}
 <!-- モーダルウィンドウ -->
-<div class="modal fade" id="screenshotModal" tabindex="-1" aria-labelledby="screenshotModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="screenshotModalLabel">スクリーンショット</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <img id="modalImage" src="" class="img-thumbnail" style="width: 100%; height: auto;">
-            </div>
-        </div>
-    </div>
-</div>
-<a href="{{url_for('game.index', appid=appid)}}" class="btn btn-primary">一覧に戻る</a>
+{% from 'components/modal_window.html' import modal_window %}
+{{ modal_window() }}
 
-<script src="{{url_for('static', filename='script.js')}}"></script>
+<!-- 一覧に戻るボタン -->
+<a href="{{url_for('game.index', appid=appid)}}" class="btn btn-primary">一覧に戻る</a>
 <script>
     function playVideo(videoid, appid) {
         fetch("{{url_for('game.get_video')}}",{

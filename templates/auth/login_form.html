@@ -1,33 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <div class="card shadow-lg p-3 mb-5 bg-white rounded" style="width: 100%; max-width: 400px">
-        <div class="card-body">
-            <h1 class="card-title text-center my-4">ログイン</h1>
-            {% from '_formhelpers.html' import render_field  %}
-            <form action="{{url_for('auth.login')}}" method="POST" novalidate>
-                {{form.hidden_tag()}}
-                <div class="mb-3">
-                    {{ render_field(form.username, class="form-control" ,placeholder="ユーザ名") }}
-                </div>
-                <div class="mb-3">
-                    {{ render_field(form.password, class="form-control", placeholder="パスワード") }}
-                </div>
-                <!--Flashメッセージ-->
-                {% for message in get_flashed_messages() %}
-                    <div class="alert alert-info" role="info">
-                        {{message}}
-                    </div>
-                {% endfor %}
-                <div class="d-grid">
-                    {{form.submit(class="btn btn-primary btn-block")}}
-                </div>
-            </form>
-            <p class="text-center my-3">
-                アカウントをお持ちでない場合は、<a href="{{url_for('auth.register')}}">こちら</a>から登録してください。
-            </p>
-        </div>
-    </div>
-</div>
+    {% from 'components/card.html' import render_card %}
+    {{ render_card("ログイン", url_for('auth.login'), form, "アカウントをお持ちでない場合", url_for('auth.register')) }}
 {% endblock %}
