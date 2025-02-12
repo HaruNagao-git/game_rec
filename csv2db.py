@@ -19,6 +19,7 @@ def csv2table():
     for row in read_csv:
         rows.append(row)
     # executemany()で複数のINSERTを実行する
+    print("process doing...")
     cur.executemany(
         "INSERT INTO games (appid, name, publisher, short_description, videos, thumbnails) VALUES (?, ?, ?, ?, ?, ?)",
         rows,
@@ -27,15 +28,9 @@ def csv2table():
     # csvも閉じておきましょう
     con.commit()
     open_csv.close()
-    # gamesテーブルの確認
-    select_test = "SELECT * FROM games"
-    print("—————————-")
-    print("fetchall")
-    print("—————————-")
-    print(cur.execute(select_test))
-    print(cur.fetchall())
     # データベースの接続終了
     con.close()
+    print("process done.")
 
 
 if __name__ == "__main__":
