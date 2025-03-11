@@ -2,22 +2,23 @@
 Steamゲーム推薦システムの検索機能を、APPIDのみに限定して作成したプロトタイプです。このプロジェクトを軸に、入力を文章にしてBERTによる解析を行ったり、推薦結果を複数並べるように改造する予定です。
 
 ## 使い方
-まず、githubからこのプロジェクトをクローンします。以下のコマンドを実行します。
-
-1. ```git clone https://github.com/HaruNagao-git/game_rec.git```
+まず、任意のフォルダを作成し、githubからこのプロジェクトをクローンします。以下のコマンドを実行します。
+1. ```mkdir game_rec```
+2. ```cd game_rec```
+3. ```git clone https://github.com/HaruNagao-git/game_rec.git```
 
 次に、クローンしたプロジェクトフォルダまで移動＆condaで仮想環境を作成し、アクティブ状態にします。以下のコマンドを実行します。
 
-2. ```conda create -n game_rec python==3.12.8```
-3. ```conda activate game_rec```
+4. ```conda create -n game_rec python==3.12.8```
+5. ```conda activate game_rec```
 
 ```install_packages.txt```からアプリケーションを動かすのに必要なパッケージをインストールします。以下のコマンドを実行します(※少々時間がかかります)。
 
-4. ```conda install --file install_packages.txt```
+6. ```conda install --file install_packages.txt```
 
 ```app.py```を実行し、出力される以下のテキストの```Running on ...```のURL部分をアクセスするとログイン画面が表示されます。
 
-5. 
+7. 
 ```bash
 (game_rec) D:\game_rec>python app.py
 * Serving Flask app 'app'

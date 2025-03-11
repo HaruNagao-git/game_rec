@@ -19,46 +19,46 @@
 
 {% block content %}
 {% if game!=[] %}
-    <div class="container">
+    <div class="content-block">
         <h2 class="my-4">{{game.name}}</h2>
-        <p>{{game.short_description}}</p>
-        <br>
-        {% if game.videos!=[] %}
-            <div class="row">
-                <div class="col-lg-7 col-md-12 text-center">
-                    <video id="movie" class="mb-4" src="{{game.videos[0]['video_max']}}" poster="{{game.videos[0]['thumbnail']}}" type="video/webm" style="width: 100%; height: auto;" controls allowfullscreen></video>
-                </div>
-                <div class="col-lg-5 col-md-12 text-center">
-                    <h4 class="mt-2">再生する動画を選択</h4>
-                    <div class="video-list">
-                        {% for i in range(game.videos|length) %}
-                            <button class="btn btn-link p-0 m-0" onclick="playVideo('{{i}}', '{{game.appid}}')">
-                                <img src="{{game.videos[i]['thumbnail']}}" class="img-thumbnail" width="245px" height="auto">
-                            </button>
-                        {% endfor %}
-                    </div>
-                </div>
+    <p>{{game.short_description}}</p>
+    <br>
+    {% if game.videos!=[] %}
+        <div class="row">
+            <div class="col-lg-7 col-md-12 text-center">
+                <video id="movie" class="mb-4" src="{{game.videos[0]['video_max']}}" poster="{{game.videos[0]['thumbnail']}}" type="video/webm" style="width: 100%; height: auto;" controls allowfullscreen></video>
             </div>
-        {% endif %}
-        {% if game.thumbnails!=[] %}
-            <div class="text-center">
-                <hr>
-                <h4 class="mt-2">スクリーンショット</h4>
-                <div class="screenshot_list">
-                    {% for screenshot in game.thumbnails['screenshots'] %}
-                        <img src="{{screenshot}}" class="img-thumbnail m-1" style="width: 245px; height: auto; object-fit: contain;" onclick="showModal('{{screenshot}}')">
+            <div class="col-lg-5 col-md-12 text-center">
+                <h4 class="mt-2">再生する動画を選択</h4>
+                <div class="video-list">
+                    {% for i in range(game.videos|length) %}
+                        <button class="btn btn-link p-0 m-0" onclick="playVideo('{{i}}', '{{game.appid}}')">
+                            <img src="{{game.videos[i]['thumbnail']}}" class="img-thumbnail" width="245px" height="auto">
+                        </button>
                     {% endfor %}
                 </div>
             </div>
-        {% endif %}
+        </div>
+    {% endif %}
+    {% if game.thumbnails!=[] %}
+        <div class="text-center">
+            <hr>
+            <h4 class="mt-2">スクリーンショット</h4>
+            <div class="screenshot_list">
+                {% for screenshot in game.thumbnails['screenshots'] %}
+                    <img src="{{screenshot}}" class="img-thumbnail m-1" style="width: 245px; height: auto; object-fit: contain;" onclick="showModal('{{screenshot}}')">
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+        <!-- 一覧に戻るボタン -->
+        <a href="{{url_for('game.index', appid=appid)}}" class="btn btn-primary">一覧に戻る</a>
     </div>
 {% endif %}
 <!-- モーダルウィンドウ -->
 {% from 'components/modal_window.html' import modal_window %}
 {{ modal_window() }}
 
-<!-- 一覧に戻るボタン -->
-<a href="{{url_for('game.index', appid=appid)}}" class="btn btn-primary">一覧に戻る</a>
 <script>
     function playVideo(videoid, appid) {
         fetch("{{url_for('game.get_video')}}",{
