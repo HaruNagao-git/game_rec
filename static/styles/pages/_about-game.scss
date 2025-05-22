@@ -1,0 +1,49 @@
+/* ABOUT GAME
+-------------------------------------------------- */
+.about-game {
+    line-height: 1.5em;
+    font-size: .875rem;
+    overflow: hidden;
+    font-weight: normal;
+    text-align: justify;
+    h2 {
+        font-size: 1rem;
+        text-transform: uppercase;
+        color: var(--gray);
+        letter-spacing: 0.03em;
+        font-weight: normal;
+        margin-bottom: 0.5rem;
+        padding: .3rem 0;
+        border-bottom: 1px solid #ddd;
+    }
+    .bb {
+        &_img {
+            margin: 1rem 0;
+            width: 100%;
+        }
+        &_tag {
+            margin-top: 1.125rem;
+            margin-bottom: 0;
+            background-image: none;
+            font-size: 1.125rem;
+            color: var(--gray);
+            text-transform: none;
+            letter-spacing: 0;
+        }
+        &_paragraph {
+            min-height: .15rem;
+            line-height: 1.5;
+            margin: 0.5rem 0;
+        }
+        &_ul {
+            color: var(--gray);
+            list-style-type: square;
+        }
+    }
+}
+/* DESKTOP */
+@media screen and (min-width: 600px) {
+    .bb_ul {
+        margin-left: 16px;
+    }
+}

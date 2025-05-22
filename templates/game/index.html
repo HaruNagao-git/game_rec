@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="game-title">ゲーム一覧</h2>
+    {% if games==[] %}
+        <p>ゲームは登録されていません</p>
+    {% else %}
+        <ul class="list-group mb-4">
+            {% for game in games %}
+                <a href="{{url_for('game.result', appid=game.appid)}}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <img src="{{game.header}}" alt="header_image" class="img-thumbnail" style="width: 250px; height: auto;">
+                        <span class="ms-3" style="font-size: 1.2em;">
+                            {{game.name}}
+                        </span>
+                    </div>
+                </a>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <!--Flashメッセージ-->
+    {% from 'components/flash.html' import flash %}
+    {{ flash(get_flashed_messages()) }}
+    <a href="{{url_for('game.search')}}" class="btn btn-primary">検索画面に戻る</a>
+{% endblock %}

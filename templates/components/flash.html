@@ -1,0 +1,7 @@
+{% macro flash(messages) %}
+{% for message in messages %}
+<div class="alert alert-info" role="info">
+        {{message}}
+    </div>
+{% endfor %}
+{% endmacro %}

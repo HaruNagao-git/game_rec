@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+<!-- ナビゲーションバーここから -->
+{% block navbar %}
+<li><a href="{{url_for('game.index', appid=appid)}}">INDEX</a>
+{% endblock %}
+<!-- ナビゲーションバーここまで -->
+
+{% block content %}
+{% if game!=[] %}
+    <h2 class="game-title">{{game.name}}</h2>
+    <div class="wrapper">
+        <aside>
+            <div class="head-img">
+                <img src="{{game.header}}" alt="ヘッダー画像">
+            </div>
+            <div class="short-desc">
+                <p>{{game.short_description}}</p>
+            </div>
+        </aside>
+        <main>
+            <section>
+                {% if game.videos_max!=[] or game.screenshots!=[]%}
+                <div class="media-main">
+                    {% if game.videos_max!=[]  %}
+                    <div class="video">
+                        <video src="{{game.videos_max[0]}}" poster="{{game.thumbnails[0]}}" type="video/webm" controls allowfullscreen></video>
+                    </div>
+                    <div class="image hidden">
+                        <img src="" alt="スクリーンショット">
+                    </div>
+                    {% elif game.screenshots!=[] %}
+                    <div class="video hidden">
+                        <video src="" poster="" type="video/webm" controls allowfullscreen></video>
+                    </div>
+                    <div class="image">
+                        <img src="{{game.screenshots[0]}}" alt="スクリーンショット">
+                    </div>
+                    {% else %}
+                    <div class="video hidden">
+                        <video src="" poster="" type="video/webm" controls allowfullscreen></video>
+                    </div>
+                    <div class="image hidden">
+                        <img src="" alt="スクリーンショット">
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="media-sub" data-simplebar data-simplebar-auto-hide="false">
+                    <div class="slide-area"> </div>
+                </div>   
+                {% endif %}
+            </section>
+            <section>
+                <div class="about-game">
+                    <h2>ゲームについて</h2>
+                    {% if game.about_the_game!="": %}
+                    <div class="description"></div>
+                    {% endif %}
+                </div>
+            </section>
+        </main>
+    </div>
+{% else %}
+<h2 class="game-title">ゲーム情報がありません</h2>
+{% endif %}
+<!-- モーダルウィンドウ -->
+<div class="modal fade" id="screenshotModal" tabindex="-1" aria-labelledby="screenshotModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="screenshotModalLabel">スクリーンショット</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" src="" class="img-thumbnail">
+                <div class="move-btn">
+                    <button id="prevButton" class="btn btn-secondary">前に戻る</button>
+                    <div class="page-num"></div>
+                    <button id="nextButton" class="btn btn-secondary">次に進む</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<!-- 自作JS -->
+<script>
+    'use strict';
+    const game_info = {{ game | tojson | safe }};
+</script>
+<script src="{{url_for('static',filename='scripts/variables.js')}}"></script>
+<script src="{{url_for('static',filename='scripts/media.js')}}"></script>
+<script src="{{url_for('static',filename='scripts/modal_window.js')}}"></script>
+{% endblock %}

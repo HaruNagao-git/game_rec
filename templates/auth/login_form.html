@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% from 'components/card.html' import render_card %}
+    {{ render_card("ログイン", url_for('auth.login'), form, "アカウントをお持ちでない場合", url_for('auth.register')) }}
+{% endblock %}

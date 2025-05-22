@@ -1,0 +1,70 @@
+/* HEADER
+-------------------------------------------------- */
+header {
+    background: var(--gray);
+    position: fixed;
+    width: 100%;
+    padding: 1rem 0;
+    z-index: 2;
+    .container {
+        display: flex;
+        justify-content: space-between;
+    }
+    a {
+        color: var(--white);
+        font-size: 1.5rem;
+        text-decoration: none;
+        line-height: 1;
+    }
+}
+.btn-menu {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    border: 1px solid rgba(255, 255, 255, .5);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    &:active {
+        background: var(--white);
+        color: var(--gray);
+        border: 1px solid rgba(0, 0, 0, .5);
+    }
+}
+.main-nav {
+    background: var(--gray);
+    width: 0;
+    position: absolute;
+    z-index: 3;
+    top: 50px;
+    right: 0;
+    overflow: hidden;
+    transition: .5s;
+    padding-left: 0;
+    margin-bottom: 0;
+    li {
+        text-align: center;
+        margin: 2rem 0;
+    }
+    a {
+        display: block;
+    }
+    &.open-menu {
+        width: 100%;
+    }
+}
+/* DESKTOP */
+@media screen and (min-width: 600px) {
+    .btn-menu {
+        display: none;
+    }
+    .main-nav {
+        display: flex;
+        position: static;
+        width: 100%;
+        margin-bottom: 0;
+        li {
+            margin: 0 0 0 1.5rem;
+        }
+    }
+    
+}

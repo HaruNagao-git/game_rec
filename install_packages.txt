@@ -1,0 +1,13 @@
+# This file may be used to create an environment using:
+# $ conda create --name <env> --file <this file>
+# platform: win-64
+# created-by: conda 24.11.2
+conda-forge::email-validator
+anaconda::flask
+conda-forge::flask-login
+conda-forge::flask-migrate
+conda-forge::flask-sqlalchemy
+conda-forge::flask-wtf
+anaconda::sqlalchemy
+anaconda::werkzeug
+anaconda::wtforms

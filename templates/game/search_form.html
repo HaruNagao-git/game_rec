@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="game-title">ゲーム検索</h1>
+{% from '_formhelpers.html' import render_field %}
+<form action="{{url_for('game.search')}}" method="POST" novalidate>
+    {{form.hidden_tag()}}
+    <div class="mb-3">
+        {{render_field(form.appid, class="form-control")}}
+    </div>
+    <div class="mb-3">
+        {{form.submit(class="btn btn-primary")}}
+    </div>
+</form>
+{% endblock %}

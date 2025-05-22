@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% from 'components/card.html' import render_card %}
+    {{ render_card("サインアップ", url_for('auth.register'), form, "すでにアカウントをお持ちの場合", url_for('auth.login')) }}
+{% endblock %}
