@@ -54,7 +54,11 @@
                 <div class="about-game">
                     <h2>ゲームについて</h2>
                     {% if game.about_the_game!="": %}
-                    <div class="description"></div>
+                    <div class="ag-box">
+                        <input type="checkbox" id="ag-check">
+                        <label for="ag-check"></label>
+                        <div class="description"></div>
+                    </div>
                     {% endif %}
                 </div>
             </section>
