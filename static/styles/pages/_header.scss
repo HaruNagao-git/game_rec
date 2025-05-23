@@ -5,7 +5,7 @@ header {
     position: fixed;
     width: 100%;
     padding: 1rem 0;
-    z-index: 2;
+    z-index: 4;
     .container {
         display: flex;
         justify-content: space-between;
@@ -34,7 +34,7 @@ header {
     background: var(--gray);
     width: 0;
     position: absolute;
-    z-index: 3;
+    z-index: 5;
     top: 50px;
     right: 0;
     overflow: hidden;

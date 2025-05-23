@@ -34,7 +34,8 @@
         .slide-area {
             display: flex;
             justify-content: flex-start;
-            gap: 5px;
+            gap: 4px;
+            padding: 4px;
             .slide {
                 width: 116px;
                 height: 65px;
@@ -44,8 +45,8 @@
                     vertical-align: top;
                 }
                 &.current {
-                    outline: 5px solid var(--gray);
-                    outline-offset: -5px;
+                    outline: 4px solid #00BFFF;
+                    outline-offset: 0px;
                 }
             }
             .movie {

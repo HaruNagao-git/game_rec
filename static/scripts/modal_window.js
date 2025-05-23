@@ -21,7 +21,7 @@ function showModal(index) {
 
 // 前後ボタンのクリックイベント
 $('#prevButton').on('click', function() {
-	if (currentImageIndex > firstImageIndex) {
+	if (currentImageIndex > 0) {
 		currentImageIndex--;
 	} else {
 		currentImageIndex = screenshotLength - 1;
@@ -54,4 +54,13 @@ $('.media-main .image img').on('click', function() {
 			showModal(index);
 		}
 	}
+});
+// モーダルウィンドウを閉じたときの処理
+$('#screenshotModal').on('hidden.bs.modal', function() {
+	// モーダルを閉じたときに画像をリセット
+	currentImageIndex = -1;
+	$('#modalImage').attr('src', '');
+	$('.page-num').text('');
+	// フォーカスを外す
+	document.activeElement.blur();
 });

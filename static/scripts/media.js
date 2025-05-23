@@ -55,7 +55,10 @@ thumb_list.forEach(function(thumb_path, index) {
 });
 
 // .slide-areaの幅を調整
-$('.slide-area').css('width', `${(thumb_list.length-1)*121+116}px`);
+const slide_width=116;
+const slide_gap=4;
+const slide_area_width=thumb_list.length*(slide_width+slide_gap)+slide_gap;
+$('.slide-area').css('width', `${slide_area_width}px`);
 
 // 最初の.slideに.currentを追加
 $('.slide').first().addClass('current');
