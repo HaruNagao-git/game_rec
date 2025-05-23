@@ -23,7 +23,7 @@ def csv2table():
         for row in read_csv:
             rows.append(row)
         # executemany()で複数のINSERTを実行する
-        print("process doing...")
+        print(f"inserting {name} data...")
         if name == "base":
             cur.executemany(
                 f"INSERT INTO {name}s (appid, name, publisher, short_description, about_the_game) VALUES (?, ?, ?, ?, ?)",
