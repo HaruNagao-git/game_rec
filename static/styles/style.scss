@@ -2,7 +2,9 @@
 @use './bases/base';
 @use './bases/common';
 @use './pages/header';
+@use './pages/form';
+@use './pages/search-index';
 @use './pages/media-panel';
 @use './pages/about-game';
-@use './pages/modalWindow';
+@use './pages/modal-window';
 @use './pages/aside';

@@ -1,0 +1,35 @@
+/* FORM
+-------------------------------------------------- */
+.search-form {
+    display: flex;
+    margin-top: 1.5rem;
+    input[type='text'] {
+        border-radius: 50px 0 0 50px;
+        background: var(--white);
+        padding: .5rem 1rem;
+        font-size: 1.125rem;
+        width: 100%;
+    }
+    input[type='submit'] {
+        background: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
+        border-radius: 0 50px 50px 0;
+        color: var(--gray-3);
+        cursor: pointer;
+        padding: .75rem 1.5rem .75rem 1rem;;
+        margin-left: -5px;
+        transition: 0s;
+        &:active {
+            background: linear-gradient(to top, var(--gray-e) 0%, #D8D9DB 40%, #FFF 100%);
+            border-color: var(--gray-d);
+        }
+    }
+    input[type='submit'],input[type='text'] {
+        border: 2px solid var(--gray-c);
+        &::placeholder {
+            color: var(--gray-c);
+        }
+    }
+}
+.form-control:focus {
+    box-shadow: none;
+}

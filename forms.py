@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField, PasswordField
 from wtforms.validators import DataRequired, Length, ValidationError
-from models import Base, User
+from models import User
 
 
 # ==============================================================================
@@ -50,16 +50,22 @@ class SignUpForm(LoginForm):
 # ゲーム検索用入力クラス
 class GameForm(FlaskForm):
     # APPID
-    appid = IntegerField(
-        "APPID：",
-        validators=[DataRequired("IDは必須入力です")],
-    )
+    appid = IntegerField("APPID：")
+    # ゲームタイトル
+    title = StringField("ゲームタイトル：")
     # 検索ボタン
     submit = SubmitField("検索")
 
     # カスタムバリデータ
-    def validate_game(self, appid):
-        # APPIDに対応しているゲームが登録されているかチェック
-        game = Base.query.filter(appid=appid.data).all()
-        if not game:
-            raise ValidationError(f"APPID'{appid.data}'のゲームは存在しません。別のAPPIDを入力してください")
+    def validate_appid(self, field):
+        # APPIDが未入力の場合（ただしtitleも未入力の時のみ）
+        if not field.data and not self.title.data:
+            raise ValidationError("APPIDまたはゲームタイトルを入力してください")
+        # APPIDが数字以外の値が入力された場合のエラー
+        if field.data is not None and not isinstance(field.data, int):
+            raise ValidationError("APPIDは数字で入力してください")
+
+    def validate_title(self, field):
+        # ゲームタイトル未入力の場合のエラー（ただしAPPIDも未入力の時のみ）
+        if not field.data and not self.appid.data:
+            raise ValidationError("APPIDまたはゲームタイトルを入力してください")

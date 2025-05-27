@@ -2,7 +2,7 @@
 
 <!-- ナビゲーションバーここから -->
 {% block navbar %}
-<li><a href="{{url_for('game.index', appid=appid)}}">INDEX</a>
+<li><a href="{{url_for('game.index', query=game.query)}}">INDEX</a>
 {% endblock %}
 <!-- ナビゲーションバーここまで -->
 
@@ -46,7 +46,7 @@
                     {% endif %}
                 </div>
                 <div class="media-sub" data-simplebar data-simplebar-auto-hide="false">
-                    <div class="slide-area"> </div>
+                    <div class="slide-area"></div>
                 </div>   
                 {% endif %}
             </section>

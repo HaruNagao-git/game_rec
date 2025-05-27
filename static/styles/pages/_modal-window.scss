@@ -16,13 +16,13 @@
         #nextButton {
             font-size: .875rem;
             color: var(--white);
-            background: var(--gray);
+            background: var(--gray-3);
             border-radius: 4px;
             padding: 0.5rem 1rem;
             cursor: pointer;
             &:active {
                 background: var(--white);
-                color: var(--gray);
+                color: var(--gray-3);
             }
         }
     }

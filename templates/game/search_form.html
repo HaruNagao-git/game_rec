@@ -1,15 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2 class="game-title">ゲーム検索</h1>
-{% from '_formhelpers.html' import render_field %}
-<form action="{{url_for('game.search')}}" method="POST" novalidate>
-    {{form.hidden_tag()}}
-    <div class="mb-3">
-        {{render_field(form.appid, class="form-control")}}
-    </div>
-    <div class="mb-3">
-        {{form.submit(class="btn btn-primary")}}
-    </div>
-</form>
+<h2 class="game-title">ゲーム検索</h2>
+<section>
+    <form action="{{url_for('game.search')}}" method="POST" novalidate>
+        {{form.hidden_tag()}}
+        <div class="search-form">
+            <!-- テキストボックスと検索ボタンは横並び -->
+            {{form.appid(class="form-control", placeholder="APPIDを入力")|safe}}
+            {{form.submit(class="btn", value="検索")}}
+        </div>
+        {% if form.appid.errors %}
+        <ul class="text-danger">
+            {% for error in form.appid.errors %}
+            <li>{{error}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </form>
+    <form action="{{url_for('game.search')}}" method="POST">
+        {{form.hidden_tag()}}
+        <div class="search-form">
+            {{form.title(class="form-control", placeholder="ゲームタイトルを入力")|safe}}
+            {{form.submit(class="btn", value="検索")}}
+        </div>
+        {% if form.title.errors %}
+        <ul class="text-danger">
+            {% for error in form.title.errors %}
+            <li>{{error}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </form>
+</section>
 {% endblock %}

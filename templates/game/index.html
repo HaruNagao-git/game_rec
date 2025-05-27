@@ -3,17 +3,21 @@
 {% block content %}
     <h2 class="game-title">ゲーム一覧</h2>
     {% if games==[] %}
-        <p>ゲームは登録されていません</p>
+        <p>合致するゲームがありません</p>
     {% else %}
-        <ul class="list-group mb-4">
+        <ul class="index-panel">
             {% for game in games %}
-                <a href="{{url_for('game.result', appid=game.appid)}}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
-                        <img src="{{game.header}}" alt="header_image" class="img-thumbnail" style="width: 250px; height: auto;">
-                        <span class="ms-3" style="font-size: 1.2em;">
-                            {{game.name}}
-                        </span>
+                <a href="{{url_for('game.result', appid=game.appid, query=game.query)}}" class="index-panel-item">
+                    <img src="{{game.header}}" alt="header_image" class="game-header">
+                    <div class="text-area">
+                        <h3 class="text-area-name" data-name="{{game.name}}">
+                            <!-- {{game.name}}の長さによる条件分岐をJSで処理 -->
+                        </h3>
+                        <p class="text-area-desc" data-desc="{{game.short_description}}">
+                            <!-- {{game.short_description}}の長さによる条件分岐をJSで処理 -->
+                        </p>
                     </div>
+                    
                 </a>
             {% endfor %}
         </ul>
@@ -22,4 +26,7 @@
     {% from 'components/flash.html' import flash %}
     {{ flash(get_flashed_messages()) }}
     <a href="{{url_for('game.search')}}" class="btn btn-primary">検索画面に戻る</a>
+{% endblock %}
+{% block script %}
+<script src="{{url_for('static', filename='scripts/index_panel.js')}}"></script>
 {% endblock %}

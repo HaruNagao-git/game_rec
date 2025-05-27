@@ -1,7 +1,7 @@
 /* ABOUT GAME
 -------------------------------------------------- */
 .about-game {
-    line-height: 1.5em;
+    line-height: 1.5;
     font-size: .875rem;
     overflow: hidden;
     font-weight: normal;
@@ -9,7 +9,7 @@
     h2 {
         font-size: 1rem;
         text-transform: uppercase;
-        color: var(--gray);
+        color: var(--gray-3);
         letter-spacing: 0.03em;
         font-weight: normal;
         margin-bottom: 0.5rem;
@@ -26,7 +26,7 @@
             margin-bottom: 0;
             background-image: none;
             font-size: 1.125rem;
-            color: var(--gray);
+            color: var(--gray-3);
             text-transform: none;
             letter-spacing: 0;
         }
@@ -36,7 +36,7 @@
             margin: 0.5rem 0;
         }
         &_ul {
-            color: var(--gray);
+            color: var(--gray-3);
             list-style-type: square;
         }
     }
@@ -89,7 +89,7 @@
                 width: 13em;
                 content: '続きをよむ';
                 color: var(--white);
-                background: #1b2538;
+                background: var(--gray-3);
                 border-radius: 20px;
             }
             &::before {
@@ -103,6 +103,10 @@
                 clip-path: polygon(50% 100%, 0 0, 100% 0);
             }
         }
+    }
+    .description {
+        color: var(--gray-3);
+        line-height: 1.6;
     }
 }
 /* DESKTOP */

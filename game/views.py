@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, Blueprint, request
+from flask import render_template, redirect, url_for, Blueprint
 from models import Base, Image, Video
 from forms import GameForm
 from flask_login import login_required
@@ -18,29 +18,41 @@ def search():
     # フォームの生成
     form = GameForm()
     # POSTメソッドの場合
-    if request.method == "POST" and form.validate():
+    if form.validate_on_submit():
         # フォームの入力値を取得
         appid = form.appid.data
+        print(appid)
+        title = form.title.data
+        query = appid if appid else title
         # 画面遷移
-        return redirect(url_for("game.index", appid=appid))
+        return redirect(url_for("game.index", query=query))
     # GETメソッドの場合
     return render_template("game/search_form.html", form=form)
 
 
 # 検索結果一覧
-@game_bp.route("/index/<int:appid>")
+@game_bp.route("/index/<query>")
 @login_required
-def index(appid):
+def index(query):
     # 一致するゲーム情報を全取得
-    bases = Base.query.filter(Base.appid == appid).all()
+    if query.isdigit():
+        # dataが数字の場合
+        appid = int(query)
+        bases = Base.query.filter(Base.appid == appid).all()
+    else:
+        # dataが文字列の場合
+        title = query
+        bases = Base.query.filter(Base.name.like(f"%{title}%")).all()
     games = []
     for base in bases:
         # Imageテーブルからの情報を取得
         images = Image.query.filter(Image.appid == base.appid).first()
         games.append(
             {
+                "query": query,
                 "appid": base.appid,
                 "name": base.name,
+                "short_description": base.short_description,
                 "header": images.header,
             }
         )
@@ -49,15 +61,16 @@ def index(appid):
 
 
 # 検索結果の詳細
-@game_bp.route("/result/<int:appid>")
+@game_bp.route("/result/<query>/<int:appid>")
 @login_required
-def result(appid):
+def result(appid, query):
     # APPIDに一致するゲーム情報を取得
     base = Base.query.get_or_404(appid)
     images = Image.query.filter(Image.appid == base.appid).first()
     videos = Video.query.filter(Video.appid == base.appid).all()
 
     game = {
+        "query": query,
         "appid": base.appid,
         "name": base.name,
         "publisher": base.publisher,
@@ -69,4 +82,4 @@ def result(appid):
         "videos_max": [v.video_max for v in videos],
     }
     # 画面遷移
-    return render_template("game/result.html", game=game, appid=appid)
+    return render_template("game/result.html", game=game)

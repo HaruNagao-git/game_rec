@@ -1,0 +1,75 @@
+/* SEARCH INDEX
+--------------------------------------------------- */
+.index-panel {
+    margin-top: .875rem;
+    margin-bottom: .875rem;
+    padding-left: 0;
+    list-style: none;
+    &-item {
+        display: inline-block;
+        justify-content: center;
+        padding: 0.5rem 1rem;
+        border: 2px solid var(--gray-e);
+        box-shadow: 0 5px var(--gray-e);
+        position: relative;
+        top: -4px;
+        border-radius: 8px;
+        text-decoration: none;
+        margin-block: .375rem;
+        transition: 0s;
+        &:hover {
+            background: var(--gray-e);
+            border-color: var(--gray-c);
+        }
+        &:active {
+            top: 0;
+            box-shadow: 0 2px var(--gray-e);
+        }
+        .game-header {
+            margin-bottom: .5rem;
+        }
+        .text-area {
+            width: 100%;
+            &-name {
+                font-size: 1rem;
+                color: var(--gray-3);
+            }
+            &-desc {
+                color: var(--gray-b);
+                font-size: .75rem;
+            }
+            &-name,&-desc {
+                margin-bottom: .125rem;
+            }
+        }
+    }
+}
+/* DESKTOP */
+@media screen and (min-width: 600px) {
+    .index-panel {
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+        &-item {
+            display: flex;
+            justify-content: flex-start;
+            .game-header {
+                width: 30%;
+                height: 30%;
+                margin-bottom: 0;
+            }
+            .text-area {
+                width: 70%;
+                margin-left: .5rem;
+                &-name {
+                    font-size: 1.5rem;
+                }
+                &-desc {
+                    font-size: .875rem;
+                }
+                &-name,&-desc {
+                    margin-bottom: .5rem;
+                }
+            }
+        }
+    }
+}
