@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField, PasswordField
+from wtforms import StringField, SubmitField, IntegerField, PasswordField, SelectMultipleField, widgets
 from wtforms.validators import DataRequired, Length, ValidationError
 from models import User
+import json
 
 
 # ==============================================================================
@@ -47,6 +48,23 @@ class SignUpForm(LoginForm):
             raise ValidationError(f"ユーザ名'{username.data}'は既に存在します。別のユーザ名を入力してください")
 
 
+# JSONファイルから選択した経験的価値の観点を読み込む関数
+def load_aspect(exp=None):
+    file_path = "data/aspect.json"
+    with open(file_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+        aspects = [(aspect, aspect) for i, aspect in enumerate(data[exp])]
+        return aspects
+
+    return False
+
+
+# チェックボックスを複数選択するためのフィールド
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(html_tag="ol", prefix_label=False)
+    option_widget = widgets.CheckboxInput()
+
+
 # ゲーム検索用入力クラス
 class GameForm(FlaskForm):
     # APPID
@@ -55,6 +73,12 @@ class GameForm(FlaskForm):
     title = StringField("ゲームタイトル：")
     # 検索ボタン
     submit = SubmitField("検索")
+    # 経験的価値の観点
+    asp_sense = MultiCheckboxField("SENSE", choices=load_aspect("SENSE"), coerce=str)
+    asp_feel = MultiCheckboxField("FEEL", choices=load_aspect("FEEL"), coerce=str)
+    asp_think = MultiCheckboxField("THINK", choices=load_aspect("THINK"), coerce=str)
+    asp_act = MultiCheckboxField("ACT", choices=load_aspect("ACT"), coerce=str)
+    asp_relate = MultiCheckboxField("RELATE", choices=load_aspect("RELATE"), coerce=str)
 
     # カスタムバリデータ
     def validate_appid(self, field):

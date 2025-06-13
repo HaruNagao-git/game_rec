@@ -33,6 +33,7 @@
                             <li><a href="{{url_for('auth.logout')}}">LOGOUT</a></li>
                             <li><a href="{{url_for('game.search')}}">SEARCH</a></li>
                             {% block navbar %}{% endblock %}
+                            {% block search_form %}{% endblock %}
                         </ul>
                     </nav>
                 </div>

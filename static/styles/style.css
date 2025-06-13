@@ -4,12 +4,14 @@
 :root {
   --black: #000;
   --gray-3: #333;
+  --gray-4: #444;
+  --gray-5: #555;
   --gray-b: #bbb;
   --gray-c: #ccc;
   --gray-d: #ddd;
   --gray-e: #eee;
   --white: #fff;
-  --max-width: 1100px;
+  --max-width: 1120px;
 }
 
 /* BASE
@@ -36,7 +38,7 @@ img, video {
   width: 100%;
 }
 
-h1, h2 {
+h1, h2, h3 {
   color: var(--gray-3);
 }
 
@@ -47,6 +49,10 @@ h1 {
 h2 {
   font-size: 1.125rem;
   margin-bottom: 0.25rem;
+}
+
+h3 {
+  font-size: 1rem;
 }
 
 .container {
@@ -64,10 +70,13 @@ h2 {
 }
 
 /* DESKTOP */
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 768px) {
   h2 {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
+  }
+  h3 {
+    font-size: 1.25rem;
   }
   .wrapper {
     display: flex;
@@ -89,7 +98,6 @@ header {
   background: var(--gray-3);
   position: fixed;
   width: 100%;
-  padding: 1rem 0;
   z-index: 4;
 }
 header .container {
@@ -101,6 +109,7 @@ header a {
   font-size: 1.5rem;
   text-decoration: none;
   line-height: 1;
+  padding: 1rem;
 }
 header a:hover {
   transition: 0.3s;
@@ -145,7 +154,7 @@ header a:hover {
 }
 
 /* DESKTOP */
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 768px) {
   .btn-menu {
     display: none;
   }
@@ -163,42 +172,141 @@ header a:hover {
 -------------------------------------------------- */
 .search-form {
   display: flex;
-  margin-top: 1.5rem;
+  font-family: "Motiva-sans", sans-serif;
 }
 .search-form input[type=text] {
-  border-radius: 50px 0 0 50px;
   background: var(--white);
-  padding: 0.5rem 1rem;
-  font-size: 1.125rem;
+  padding: 0.5rem;
+  font-size: 1rem;
   width: 100%;
 }
 .search-form input[type=submit] {
-  background: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
-  border-radius: 0 50px 50px 0;
+  background: var(--gray-e);
   color: var(--gray-3);
   cursor: pointer;
   padding: 0.75rem 1.5rem 0.75rem 1rem;
-  margin-left: -5px;
+  margin-left: -1px;
   transition: 0s;
 }
 .search-form input[type=submit]:active {
-  background: linear-gradient(to top, var(--gray-e) 0%, #D8D9DB 40%, #FFF 100%);
-  border-color: var(--gray-d);
+  background: var(--gray-5);
 }
 .search-form input[type=submit], .search-form input[type=text] {
-  border: 2px solid var(--gray-c);
+  border: 1.5px solid var(--gray-c);
 }
 .search-form input[type=submit]::-moz-placeholder, .search-form input[type=text]::-moz-placeholder {
   color: var(--gray-c);
+  font-size: 0.875rem;
 }
 .search-form input[type=submit]::placeholder, .search-form input[type=text]::placeholder {
   color: var(--gray-c);
+  font-size: 0.875rem;
+}
+.search-form input[type=text], .search-form input[type=submit] {
+  border-radius: 0;
+}
+
+.label-area {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.label-area .select-box {
+  position: relative;
+  border: 1px solid #bbb;
+  background: #fff;
+  padding: 0.5rem;
+  width: 100%;
+}
+.label-area .select-box select {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.label-area .select-box select:focus-visible {
+  outline: none;
+}
+.label-area .select-box::after {
+  display: inline-block;
+  position: absolute;
+  top: 0.625rem;
+  right: 1rem;
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  content: "\f078";
+  color: var(--gray-b);
+}
+
+.checkbox-area {
+  overflow-y: scroll;
+  margin: 1rem 0;
+  padding: 1rem;
+  outline: 1px solid var(--gray-c);
+  background: #f8f6f2;
+  height: 20vh;
+}
+.checkbox-area label {
+  display: inline-block;
+  margin-right: 1.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  /* デフォルトのチェックボックスを非表示 */
+}
+.checkbox-area label input[type=checkbox] {
+  opacity: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  position: absolute;
+  /* チェックボックス用の四角形を作る */
+  /* チェックが入るとチェックアイコンを表示 */
+}
+.checkbox-area label input[type=checkbox] + span::before {
+  display: inline-block;
+  content: "";
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid #bbb;
+  background: #fff;
+  margin: -0.125rem 0.5rem 0 0;
+  vertical-align: middle;
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  padding: 2px 2px 2px 5px;
+  line-height: 1.2;
+}
+.checkbox-area label input[type=checkbox]:checked + span::before {
+  content: "\f00c";
 }
 
 .form-control:focus {
   box-shadow: none;
 }
 
+@media screen and (min-width: 768px) {
+  .search-form input[type=text] {
+    padding: 0.8rem 1rem;
+    font-size: 1.125rem;
+  }
+  .search-form input[type=text]::-moz-placeholder {
+    font-size: 0.875rem;
+  }
+  .search-form input[type=text]::placeholder {
+    font-size: 0.875rem;
+  }
+  .search-form input[type=submit] {
+    font-size: 1.125rem;
+  }
+  .search-form input[type=submit], .search-form input[type=text] {
+    border: 2px solid var(--gray-c);
+  }
+  .label-area {
+    justify-content: end;
+  }
+  .label-area .select-box {
+    width: 40vw;
+  }
+}
 /* SEARCH INDEX
 --------------------------------------------------- */
 .index-panel {
@@ -209,7 +317,7 @@ header a:hover {
 }
 .index-panel-item {
   display: inline-block;
-  justify-content: center;
+  width: 100%;
   padding: 0.5rem 1rem;
   border: 2px solid var(--gray-e);
   box-shadow: 0 5px var(--gray-e);
@@ -247,7 +355,7 @@ header a:hover {
 }
 
 /* DESKTOP */
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 768px) {
   .index-panel {
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
@@ -259,7 +367,7 @@ header a:hover {
   .index-panel-item .game-header {
     width: 30%;
     height: 30%;
-    margin-bottom: 0;
+    margin: auto 0;
   }
   .index-panel-item .text-area {
     width: 70%;
@@ -493,7 +601,7 @@ header a:hover {
 }
 
 /* DESKTOP */
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 768px) {
   .bb_ul {
     margin-left: 16px;
   }

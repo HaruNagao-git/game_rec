@@ -3,14 +3,29 @@
     <div class="card shadow-lg p-3 mb-5 bg-white rounded" style="width: 100%; max-width: 400px;">
         <div class="card-body">
             <h1 class="card-title text-center my-4">{{title}}</h1>
-            {% from '_formhelpers.html' import render_field  %}
             <form action="{{action_func}}" method="POST" novalidate>
                 {{form.hidden_tag()}}
                 <div class="mb-3">
-                    {{ render_field(form.username, class="form-control" ,placeholder="ユーザ名") }}
+                    <dt>{{form.username.label}}</dt>
+                    <dd>{{form.username(class="form-control", placeholder="ユーザ名")|safe}}</dd>
+                    {% if form.username.errors %}
+                        <ul class="text-danger">
+                            {% for error in form.username.errors %}
+                                <li>{{error}}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </div>
                 <div class="mb-3">
-                    {{ render_field(form.password, class="form-control", placeholder="パスワード") }}
+                    <dt>{{form.password.label}}</dt>
+                    <dd>{{form.password(class="form-control", placeholder="パスワード")|safe}}</dd>
+                    {% if form.password.errors %}
+                        <ul class="text-danger">
+                            {% for error in form.username.errors %}
+                                <li>{{error}}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </div>
                 <!--Flashメッセージ-->
                 {% from 'components/flash.html' import flash %}

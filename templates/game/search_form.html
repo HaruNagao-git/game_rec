@@ -1,29 +1,18 @@
 {% extends 'base.html' %}
-
-{% block content %}
-<h2 class="game-title">ゲーム検索</h2>
-<section>
+{% block search_form %}
     <form action="{{url_for('game.search')}}" method="POST" novalidate>
         {{form.hidden_tag()}}
         <div class="search-form">
             <!-- テキストボックスと検索ボタンは横並び -->
-            {{form.appid(class="form-control", placeholder="APPIDを入力")|safe}}
+            {{form.title(class="form-control", placeholder="タイトルを入力（例：FINAL FANTASY）")|safe}}
             {{form.submit(class="btn", value="検索")}}
         </div>
-        {% if form.appid.errors %}
-        <ul class="text-danger">
-            {% for error in form.appid.errors %}
-            <li>{{error}}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
     </form>
-    <form action="{{url_for('game.search')}}" method="POST">
-        {{form.hidden_tag()}}
-        <div class="search-form">
-            {{form.title(class="form-control", placeholder="ゲームタイトルを入力")|safe}}
-            {{form.submit(class="btn", value="検索")}}
-        </div>
+{% endblock %}
+{% block content %}
+<h2 class="game-title">ゲーム検索</h2>
+<div class="wrapper">
+    <aside>
         {% if form.title.errors %}
         <ul class="text-danger">
             {% for error in form.title.errors %}
@@ -31,6 +20,20 @@
             {% endfor %}
         </ul>
         {% endif %}
-    </form>
-</section>
+        <section>
+            
+        </section>
+    </aside>
+    <main>
+        <form action="{{url_for('game.search')}}" method="POST" novalidate>
+            {{form.hidden_tag()}}
+            {% from 'components/checkbox_form.html' import render_checkbox_form %}
+            {{render_checkbox_form(form, form.asp_sense, "SENSE")}}
+            {{render_checkbox_form(form, form.asp_feel, "FEEL")}}
+            {{render_checkbox_form(form, form.asp_think, "THINK")}}
+            {{render_checkbox_form(form, form.asp_act, "ACT")}}
+            {{render_checkbox_form(form, form.asp_relate, "RELATE")}}
+        </form>
+    </main>
+</div>
 {% endblock %}

@@ -1,0 +1,21 @@
+{% macro render_checkbox_form(form, field, exp_label) %}
+    <div class="label-area">
+        <h3>{{exp_label}}</h3>
+        <div class="select-box">
+            <select name="current-position">
+                <option value="">ーー 並び替えオプション ーー</option>
+                <option value="1">オプション１</option>
+                <option value="2">オプション２</option>
+                <option value="3">オプション３</option>
+            </select>
+        </div>
+    </div>
+    <div class="checkbox-area">
+        {% for subfield in field %}
+        <label>
+            {{subfield}}
+            <span>{{subfield.label.text}}</span>
+        </label>
+        {% endfor %}
+    </div>
+{% endmacro %}

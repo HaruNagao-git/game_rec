@@ -7,7 +7,7 @@
     list-style: none;
     &-item {
         display: inline-block;
-        justify-content: center;
+        width: 100%;
         padding: 0.5rem 1rem;
         border: 2px solid var(--gray-e);
         box-shadow: 0 5px var(--gray-e);
@@ -45,7 +45,7 @@
     }
 }
 /* DESKTOP */
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 768px) {
     .index-panel {
         margin-top: 1.5rem;
         margin-bottom: 1.5rem;
@@ -55,7 +55,7 @@
             .game-header {
                 width: 30%;
                 height: 30%;
-                margin-bottom: 0;
+                margin: auto 0;
             }
             .text-area {
                 width: 70%;
