@@ -74,3 +74,29 @@ class Video(db.Model):
     video_480p = db.Column(db.String(200))
     # video_max(URL)
     video_max = db.Column(db.String(200))
+    
+# 観点情報
+class Aspect(db.Model):
+    # テーブル名
+    __tablename__ = "aspects"
+    # 観点ID(PK)
+    aspect_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # 観点の経験的価値
+    experience = db.Column(db.String(6), nullable=False)
+    # 観点名
+    name = db.Column(db.String(10), nullable=False)
+    
+# 中間テーブル（多対多リレーション）
+class BaseAspect(db.Model):
+    # テーブル名
+    __tablename__ = "base_aspects"
+    # ID(PK)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # APPID(FK)
+    appid = db.Column(db.Integer, db.ForeignKey("bases.appid"), nullable=False,)
+    # 観点ID(FK)
+    aspect_id = db.Column(db.Integer, db.ForeignKey("aspects.aspect_id"), nullable=False)
+    
+    # リレーション
+    base = db.relationship(Base, backref=db.backref("aspects", lazy="dynamic"))
+    aspect = db.relationship(Aspect, backref=db.backref("bases", lazy="dynamic"))

@@ -279,6 +279,37 @@ header a:hover {
   content: "\f00c";
 }
 
+.aspect-area {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 4rem;
+}
+.aspect-area-choosed {
+  background: #f8f6f2;
+  padding: 1rem;
+  border: 1px solid var(--gray-c);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  height: 20vh;
+  overflow-y: scroll;
+}
+.aspect-area-choosed span {
+  color: var(--gray-3);
+  font-size: 1rem;
+}
+.aspect-area input[type=submit] {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: var(--gray-e);
+  color: var(--gray-3);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+.aspect-area input[type=submit]:hover {
+  background: var(--gray-5);
+}
+
 .form-control:focus {
   box-shadow: none;
 }
@@ -305,6 +336,12 @@ header a:hover {
   }
   .label-area .select-box {
     width: 40vw;
+  }
+  .checkbox-area {
+    height: 30vh;
+  }
+  .aspect-area-choosed {
+    height: 30vh;
   }
 }
 /* SEARCH INDEX

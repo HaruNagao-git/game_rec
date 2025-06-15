@@ -11,8 +11,13 @@
 {% endblock %}
 {% block content %}
 <h2 class="game-title">ゲーム検索</h2>
-<div class="wrapper">
+<form class="wrapper" action="{{url_for('game.search')}}" method="POST" novalidate>
     <aside>
+        <div class="aspect-area">  
+            <h3>選択した観点</h3>
+            <div class="aspect-area-choosed"></div>
+            {{form.submit(class="btn", value="検索")}}
+        </div>
         {% if form.title.errors %}
         <ul class="text-danger">
             {% for error in form.title.errors %}
@@ -20,20 +25,18 @@
             {% endfor %}
         </ul>
         {% endif %}
-        <section>
-            
-        </section>
     </aside>
     <main>
-        <form action="{{url_for('game.search')}}" method="POST" novalidate>
-            {{form.hidden_tag()}}
-            {% from 'components/checkbox_form.html' import render_checkbox_form %}
-            {{render_checkbox_form(form, form.asp_sense, "SENSE")}}
-            {{render_checkbox_form(form, form.asp_feel, "FEEL")}}
-            {{render_checkbox_form(form, form.asp_think, "THINK")}}
-            {{render_checkbox_form(form, form.asp_act, "ACT")}}
-            {{render_checkbox_form(form, form.asp_relate, "RELATE")}}
-        </form>
+        {{form.hidden_tag()}}
+        {% from 'components/checkbox_form.html' import render_checkbox_form %}
+        {{render_checkbox_form(form, form.asp_sense, "SENSE")}}
+        {{render_checkbox_form(form, form.asp_feel, "FEEL")}}
+        {{render_checkbox_form(form, form.asp_think, "THINK")}}
+        {{render_checkbox_form(form, form.asp_act, "ACT")}}
+        {{render_checkbox_form(form, form.asp_relate, "RELATE")}}
     </main>
-</div>
+</form>
+{% endblock %}
+{% block script %}
+<script src="{{url_for('static', filename='scripts/aspect-area.js')}}"></script>
 {% endblock %}

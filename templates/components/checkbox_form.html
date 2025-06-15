@@ -12,10 +12,13 @@
     </div>
     <div class="checkbox-area">
         {% for subfield in field %}
-        <label>
-            {{subfield}}
-            <span>{{subfield.label.text}}</span>
-        </label>
+        {% if subfield != "csrf_token" %}
+            <label>
+                {{subfield}}
+                <span>{{subfield.label.text}}</span>
+            </label>
+        {% endif %}
         {% endfor %}
+        {{form.csrf_token}}
     </div>
 {% endmacro %}

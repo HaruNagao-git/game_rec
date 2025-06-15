@@ -50,10 +50,13 @@ class SignUpForm(LoginForm):
 
 # JSONファイルから選択した経験的価値の観点を読み込む関数
 def load_aspect(exp=None):
-    file_path = "data/aspect.json"
+    file_path = "data/json/aspect_word2vec.json"
     with open(file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
-        aspects = [(aspect, aspect) for i, aspect in enumerate(data[exp])]
+        aspects = []
+        for key, value in data[exp].items():
+            aspects.append((value, key))
+            
         return aspects
 
     return False
@@ -67,29 +70,33 @@ class MultiCheckboxField(SelectMultipleField):
 
 # ゲーム検索用入力クラス
 class GameForm(FlaskForm):
-    # APPID
-    appid = IntegerField("APPID：")
     # ゲームタイトル
     title = StringField("ゲームタイトル：")
+    
+    # 経験的価値の観点
+    asp_sense = MultiCheckboxField("SENSE", choices=load_aspect("SENSE"), coerce=int)
+    asp_feel = MultiCheckboxField("FEEL", choices=load_aspect("FEEL"), coerce=int)
+    asp_think = MultiCheckboxField("THINK", choices=load_aspect("THINK"), coerce=int)
+    asp_act = MultiCheckboxField("ACT", choices=load_aspect("ACT"), coerce=int)
+    asp_relate = MultiCheckboxField("RELATE", choices=load_aspect("RELATE"), coerce=int)
+
     # 検索ボタン
     submit = SubmitField("検索")
-    # 経験的価値の観点
-    asp_sense = MultiCheckboxField("SENSE", choices=load_aspect("SENSE"), coerce=str)
-    asp_feel = MultiCheckboxField("FEEL", choices=load_aspect("FEEL"), coerce=str)
-    asp_think = MultiCheckboxField("THINK", choices=load_aspect("THINK"), coerce=str)
-    asp_act = MultiCheckboxField("ACT", choices=load_aspect("ACT"), coerce=str)
-    asp_relate = MultiCheckboxField("RELATE", choices=load_aspect("RELATE"), coerce=str)
+    
+    def validate(self, extra_validators=None):
+        rv = super().validate(extra_validators=extra_validators)
+        if not rv:
+            return False
+        # すべて未入力かを確認
+        if not self.title.data and not (
+            self.asp_sense.data or
+            self.asp_feel.data or
+            self.asp_think.data or
+            self.asp_act.data or
+            self.asp_relate.data
+        ):
+            error_message = f"{self.asp_sense.data} ゲームタイトルまたは１つ以上の観点を入力してください"
+            self.title.errors.append(error_message)  # 適当なフィールドにエラーを出す
+            return False
 
-    # カスタムバリデータ
-    def validate_appid(self, field):
-        # APPIDが未入力の場合（ただしtitleも未入力の時のみ）
-        if not field.data and not self.title.data:
-            raise ValidationError("APPIDまたはゲームタイトルを入力してください")
-        # APPIDが数字以外の値が入力された場合のエラー
-        if field.data is not None and not isinstance(field.data, int):
-            raise ValidationError("APPIDは数字で入力してください")
-
-    def validate_title(self, field):
-        # ゲームタイトル未入力の場合のエラー（ただしAPPIDも未入力の時のみ）
-        if not field.data and not self.appid.data:
-            raise ValidationError("APPIDまたはゲームタイトルを入力してください")
+        return True
