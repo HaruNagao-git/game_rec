@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         // 表示を更新
         choosedDiv.innerHTML = checkedLabels.length > 0
-            ? checkedLabels.map(l => `<span>${l}</span>`).join(' ')
-            : '<span class="text-muted">未選択</span>';
+            ? checkedLabels.map(l => `<li>${l}</li>`).join(' ')
+            : '<li class="text-muted">未選択</li>';
     }
 
     // 初期表示

@@ -285,17 +285,23 @@ header a:hover {
   top: 4rem;
 }
 .aspect-area-choosed {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
   background: #f8f6f2;
-  padding: 1rem;
+  padding-top: 1rem;
   border: 1px solid var(--gray-c);
   border-radius: 8px;
   margin-bottom: 1rem;
   height: 20vh;
   overflow-y: scroll;
 }
-.aspect-area-choosed span {
+.aspect-area-choosed li {
   color: var(--gray-3);
   font-size: 1rem;
+  list-style: disc;
+  margin-right: 2rem;
+  margin-bottom: 0.5rem;
 }
 .aspect-area input[type=submit] {
   display: inline-block;
@@ -303,11 +309,19 @@ header a:hover {
   background: var(--gray-e);
   color: var(--gray-3);
   cursor: pointer;
+  border: 1px solid var(--gray-c);
   border-radius: 4px;
-  transition: background-color 0.3s ease;
+  box-shadow: 0 5px var(--gray-b);
+  position: relative;
+  top: -4px;
+  transition: 0s;
 }
 .aspect-area input[type=submit]:hover {
   background: var(--gray-5);
+}
+.aspect-area input[type=submit]:active {
+  top: 0;
+  box-shadow: 0 2px var(--gray-b);
 }
 
 .form-control:focus {

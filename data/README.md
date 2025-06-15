@@ -16,4 +16,5 @@ csvフォルダ内の各csvファイルをデータベースに格納する方�
 
 最後に、以下のコマンドを実行して、```instance/gamedb.sqlite```にデータが記録されていれば完了です。
 
-4. ```python data/csv2db.py```
+4. ```python3 data/csv2db.py```
+5. ```python3 data/json2db.py```

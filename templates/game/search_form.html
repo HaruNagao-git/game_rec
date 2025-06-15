@@ -15,8 +15,8 @@
     <aside>
         <div class="aspect-area">  
             <h3>選択した観点</h3>
-            <div class="aspect-area-choosed"></div>
-            {{form.submit(class="btn", value="検索")}}
+            <ul class="aspect-area-choosed"></ul>
+            {{form.submit(class="btn", value="観点で検索")}}
         </div>
         {% if form.title.errors %}
         <ul class="text-danger">

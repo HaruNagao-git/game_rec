@@ -53,6 +53,7 @@ def index(query):
     aspects = session.get("aspects", {})
     # 一致するゲーム情報を全取得
     title = query
+    games = []
     # aspectsが空でない場合、選択した観点が存在するゲーム情報を中間テーブルbase_aspectsから取得
     if aspects:
         # aspectsリストに含まれる観点IDを取得
@@ -69,28 +70,39 @@ def index(query):
             .filter(BaseAspect.aspect_id.in_(aspect_ids))
             .group_by(Base.appid)
             .order_by(desc("match_count"))
-            .limit(10)  # 上位10件を取得
+            .limit(10) # 上位10件を取得
         )
+        for base, _ in base_aspects.all():
+            # Imageテーブルからの情報を取得
+            images = Image.query.filter(Image.appid == base.appid).first()
+            games.append(
+                {
+                    "query": query,
+                    "appid": base.appid,
+                    "name": base.name,
+                    "short_description": base.short_description,
+                    "header": images.header,
+                }
+            )
     if title != "aspects":
         # タイトルがある場合は、Baseテーブルからタイトルに一致するゲーム情報を取得
         base_aspects = (
             db.session.query(Base)
             .filter(Base.name.ilike(f"%{title}%"))
         )
-    
-    games = []
-    for base, match_count in base_aspects.all():
-        # Imageテーブルからの情報を取得
-        images = Image.query.filter(Image.appid == base.appid).first()
-        games.append(
-            {
-                "query": query,
-                "appid": base.appid,
-                "name": base.name,
-                "short_description": base.short_description,
-                "header": images.header,
-            }
-        )
+        for base in base_aspects.all():
+            # Imageテーブルからの情報を取得
+            images = Image.query.filter(Image.appid == base.appid).first()
+            games.append(
+                {
+                    "query": query,
+                    "appid": base.appid,
+                    "name": base.name,
+                    "short_description": base.short_description,
+                    "header": images.header,
+                }
+            )
+        
     # 画面遷移
     return render_template("game/index.html", games=games)
 

@@ -105,16 +105,22 @@
     position: sticky;
     top: 4rem;
     &-choosed {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
         background: #f8f6f2;
-        padding: 1rem;
+        padding-top: 1rem;
         border: 1px solid var(--gray-c);
         border-radius: 8px;
         margin-bottom: 1rem;
         height: 20vh;
         overflow-y: scroll;
-        span {    
+        li {    
             color: var(--gray-3);
             font-size: 1rem;
+            list-style: disc;
+            margin-right: 2rem;
+            margin-bottom: 0.5rem;
         }
     }
     input[type='submit'] {
@@ -123,10 +129,18 @@
         background: var(--gray-e);
         color: var(--gray-3);
         cursor: pointer;
+        border: 1px solid var(--gray-c);
         border-radius: 4px;
-        transition: background-color 0.3s ease;
+        box-shadow: 0 5px var(--gray-b);
+        position: relative;
+        top: -4px;
+        transition: 0s;
         &:hover {
             background: var(--gray-5);
+        }
+        &:active {
+            top: 0;
+            box-shadow: 0 2px var(--gray-b);
         }
     }
 }
