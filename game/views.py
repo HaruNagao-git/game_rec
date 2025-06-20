@@ -1,7 +1,7 @@
-import ast
 from flask import render_template, redirect, url_for, Blueprint, session, request
 from flask_login import login_required
 from forms import GameForm
+import json
 from models import Base, Image, Video, Aspect, BaseAspect, db
 from sqlalchemy import func, desc
 
@@ -124,7 +124,7 @@ def result(appid, query):
         "short_description": base.short_description,
         "about_the_game": base.about_the_game,
         "header": images.header,
-        "screenshots": ast.literal_eval(images.screenshots),
+        "screenshots": json.loads(images.screenshots),
         "thumbnails": [v.thumbnail for v in videos],
         "videos_max": [v.video_max for v in videos],
     }

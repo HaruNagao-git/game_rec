@@ -28,7 +28,13 @@ def login():
             # ゲーム検索画面にリダイレクト
             return redirect(url_for("game.search"))
         # 失敗
-        flash("認証不備です")
+        else:
+            # ユーザが存在しない場合
+            if user is None:
+                flash(f"ユーザ名:{username} は存在しません")
+            # パスワードが間違っている場合
+            else:
+                flash("パスワードが間違っています")
     # GETメソッドの場合
     return render_template("auth/login_form.html", form=form)
 

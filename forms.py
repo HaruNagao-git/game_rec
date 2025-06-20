@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField, PasswordField, SelectMultipleField, widgets
+from wtforms import StringField, SubmitField, PasswordField, SelectMultipleField, widgets
 from wtforms.validators import DataRequired, Length, ValidationError
 from models import User
 import json
@@ -18,7 +18,7 @@ class LoginForm(FlaskForm):
     # パスワード
     password = PasswordField(
         "パスワード：",
-        validators=[Length(4, 10, "パスワードの長さは4文字以上10文字以内で入力してください")],
+        validators=[DataRequired("パスワードは必須入力です"), Length(4, 10, "パスワードの長さは4文字以上10文字以内で入力してください")],
     )
     # 送信ボタン
     submit = SubmitField("ログイン")
@@ -82,21 +82,3 @@ class GameForm(FlaskForm):
 
     # 検索ボタン
     submit = SubmitField("検索")
-    
-    def validate(self, extra_validators=None):
-        rv = super().validate(extra_validators=extra_validators)
-        if not rv:
-            return False
-        # すべて未入力かを確認
-        if not self.title.data and not (
-            self.asp_sense.data or
-            self.asp_feel.data or
-            self.asp_think.data or
-            self.asp_act.data or
-            self.asp_relate.data
-        ):
-            error_message = f"{self.asp_sense.data} ゲームタイトルまたは１つ以上の観点を入力してください"
-            self.title.errors.append(error_message)  # 適当なフィールドにエラーを出す
-            return False
-
-        return True
