@@ -5,7 +5,12 @@
         <div class="search-form">
             <!-- テキストボックスと検索ボタンは横並び -->
             {{form.title(class="form-control", placeholder="タイトルを入力（例：FINAL FANTASY）")|safe}}
-            {{form.submit(class="btn", value="検索")}}
+        <!--{{form.submit(class="btn", value="検索")}}-->
+            <span>
+                <button class="name-search-btn" type="submit" aria-label="Search">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </span>
         </div>
     </form>
 {% endblock %}

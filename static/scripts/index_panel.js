@@ -1,13 +1,15 @@
+'use strict';
+
 // メディアクエリで条件分岐
-// 画面幅が600px以上の場合
+// 画面幅が768px以上の場合
 // namesを50文字まで表示, short_descを100文字まで表示
-// 画面幅が600px未満の場合
+// 画面幅が768px未満の場合
 // namesを20文字まで表示, short_descを50文字まで表示
 //jQueryを使用
 
 $(document).ready(function() {
     function updateDisplay() {
-        var isWideScreen = $(window).width() >= 600;
+        var isWideScreen = $(window).width() >= 768;
         var nameLength = isWideScreen ? 50 : 30;
         var descLength = isWideScreen ? 200 : 60;
 

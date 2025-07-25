@@ -62,15 +62,12 @@ def index(query):
 
         # BaseAspectからappidごとに一致数をカウントし、多い順に並べる
         base_aspects = (
-            db.session.query(
-                Base,
-                func.count(BaseAspect.aspect_id).label("match_count")
-            )
+            db.session.query(Base, func.count(BaseAspect.aspect_id).label("match_count"))
             .join(BaseAspect, Base.appid == BaseAspect.appid)
             .filter(BaseAspect.aspect_id.in_(aspect_ids))
             .group_by(Base.appid)
             .order_by(desc("match_count"))
-            .limit(10) # 上位10件を取得
+            .limit(10)  # 上位10件を取得
         )
         for base, _ in base_aspects.all():
             # Imageテーブルからの情報を取得
@@ -86,10 +83,7 @@ def index(query):
             )
     if title != "aspects":
         # タイトルがある場合は、Baseテーブルからタイトルに一致するゲーム情報を取得
-        base_aspects = (
-            db.session.query(Base)
-            .filter(Base.name.ilike(f"%{title}%"))
-        )
+        base_aspects = db.session.query(Base).filter(Base.name.ilike(f"%{title}%"))
         for base in base_aspects.all():
             # Imageテーブルからの情報を取得
             images = Image.query.filter(Image.appid == base.appid).first()
@@ -102,7 +96,7 @@ def index(query):
                     "header": images.header,
                 }
             )
-        
+
     # 画面遷移
     return render_template("game/index.html", games=games)
 

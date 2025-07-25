@@ -2,7 +2,8 @@
 
 <!-- ナビゲーションバーここから -->
 {% block navbar %}
-<li><a href="{{url_for('game.index', query=game.query)}}">INDEX</a>
+<li><a href="{{url_for('game.search')}}">SEARCH</a></li>
+<li><a href="{{url_for('game.index', query=game.query)}}">GAME LIST</a>
 {% endblock %}
 <!-- ナビゲーションバーここまで -->
 

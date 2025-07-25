@@ -1,3 +1,5 @@
+'use strict';
+
 document.addEventListener('DOMContentLoaded', function() {
     // チェックボックスをすべて取得
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');

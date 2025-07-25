@@ -1,19 +1,20 @@
 /* CARD
 --------------------------------------------------- */
 .background-img, .card-container {
-    height: 100%;
+    height: 100vh;
 }
 .background-img {
-    position: fixed;
-    z-index: -1;
+    object-fit: cover;
 }
 .card-container {
     position: absolute;
+    top: 0;
+    left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, var(--gray-c) 2px, var(--gray-c) 2px, var(--gray-c) 4px);
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, var(--gray-c) 3px, var(--gray-c) 4px);
     .card {
         box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
         padding: 2rem 1rem;

@@ -24,6 +24,16 @@
     <!-- Script -->
         <!-- Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        <!-- JQuery -->
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <!-- 自作CSS -->
+        <script>
+            // Flaskのurl_forで画像パスを取得してJS変数に渡す
+            const desktopImgPath = "{{ url_for('static', filename='imgs/reception-desktop.jpg') }}";
+            const mobileImgPath = "{{ url_for('static', filename='imgs/reception-mobile.jpg') }}";
+        </script>
+        <script src="{{url_for('static', filename='scripts/card_background.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/toggle_visible.js')}}"></script>
         {% block script %}{% endblock %}
     </body>
 </html>

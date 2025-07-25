@@ -17,6 +17,10 @@
         border-bottom: 1px solid #ddd;
     }
     .bb {
+        &_img_ctn {
+            position: relative;
+            display: inline-block;
+        }
         &_img {
             margin: 1rem 0;
             width: 100%;

@@ -3,11 +3,38 @@
 .search-form {
     display: flex;
     font-family: 'Motiva-sans', sans-serif;
-    input[type='text'] {
-        background: var(--white);
+    background-color: var(--white);
+    span,#title {
+        border-top: 1.5px solid var(--gray-c);
+        border-bottom: 1.5px solid var(--gray-c);
+        border-radius: 0;
+    }
+    span {
+        border-right: 1.5px solid var(--gray-c);
+        margin-left: -1.5px;
+        padding-right: 0.5rem;
+    }
+    #title {
         padding: .5rem;
         font-size: 1rem;
         width: 100%;
+        border-left: 1.5px solid var(--gray-c);
+        &::placeholder {
+            color: var(--gray-c);
+            font-size: .875rem;
+        }
+    }
+    .name-search-btn {
+        background: var(--white);
+        height: 100%;
+        width: 50px;
+        font-size: 1.5rem;
+        line-height: 1;
+        color: var(--gray-7);
+        text-align: center;
+        :hover {
+            color: var(--gray-3);
+        }
     }
     input[type='submit'] {
         background: var(--gray-e);
@@ -19,22 +46,14 @@
         &:active {
             background: var(--gray-5);
         }
-    }
-    input[type='submit'],input[type='text'] {
-        border: 1.5px solid var(--gray-c);
-        &::placeholder {
-            color: var(--gray-c);
-            font-size: .875rem;
-        }
-    }
-    input[type='text'], input[type='submit'] {
-        border-radius: 0;
-    }
+    }    
+}
+.label-area, .aspect-area {
+    margin-top: 1rem;
 }
 .label-area {
     display: flex;
     gap: 1rem;
-    margin-top: 1rem;
     .select-box {
         position: relative;
         border: 1px solid #bbb;
@@ -149,7 +168,7 @@
 }
 @media screen and (min-width: 768px) {
     .search-form {
-        input[type='text'] {
+        #title {
             padding: .8rem 1rem;
             font-size: 1.125rem;
             &::placeholder {
@@ -159,8 +178,16 @@
         input[type='submit'] {
             font-size: 1.125rem;
         }
-        input[type='submit'],input[type='text'] {
-            border: 2px solid var(--gray-c);
+        span,#title {
+            border-top: 2px solid var(--gray-c);
+            border-bottom: 2px solid var(--gray-c);
+        }
+        span {
+            border-right: 2px solid var(--gray-c);
+            margin-left: -2px;
+        }
+        #title {
+            border-left: 2px solid var(--gray-c);
         }
     }
     .label-area {

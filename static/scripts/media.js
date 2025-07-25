@@ -29,7 +29,7 @@ thumb_list.forEach(function(thumb_path, index) {
 		// movieクラスがあれば動画を、それ以外は画像を表示
 		if ($(this).hasClass('movie')) {
 			if ($('.video').hasClass('hidden')) { // videoにhiddenタグがあった場合
-				// videoのhiddenタグを削除し、imgのhiddenタグを追加
+				// videoのhiddenタグを削除し、imageのhiddenタグを追加
 				$('.video').toggleClass('hidden');
 				$('.image').toggleClass('hidden');
 			}
@@ -41,8 +41,8 @@ thumb_list.forEach(function(thumb_path, index) {
 			$('.video').find('video').attr('poster', thumb_path);
 		} else {
 			if ($('.image').hasClass('hidden')) { // imgにhiddenタグがあった場合
-				// videoのhiddenタグを削除し、imgのhiddenタグを追加
-				$('.video').toggleClass('hidden');
+				// imageのhiddenタグを削除し、videoのhiddenタグを追加＆再生をストップ
+				$('.video').toggleClass('hidden').find('video').get(0).pause();
 				$('.image').toggleClass('hidden');
 			}
 

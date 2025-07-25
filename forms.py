@@ -18,7 +18,10 @@ class LoginForm(FlaskForm):
     # パスワード
     password = PasswordField(
         "パスワード：",
-        validators=[DataRequired("パスワードは必須入力です"), Length(4, 10, "パスワードの長さは4文字以上10文字以内で入力してください")],
+        validators=[
+            DataRequired("パスワードは必須入力です"),
+            Length(4, 10, "パスワードの長さは4文字以上10文字以内で入力してください"),
+        ],
     )
     # 送信ボタン
     submit = SubmitField("ログイン")
@@ -48,7 +51,7 @@ class SignUpForm(LoginForm):
             raise ValidationError(f"ユーザ名'{username.data}'は既に存在します。別のユーザ名を入力してください")
 
 
-# JSONファイルから選択した経験的価値の観点を読み込む関数
+# JSONファイルから選択した経験価値の観点を読み込む関数
 def load_aspect(exp=None):
     file_path = "data/json/aspect_word2vec.json"
     with open(file_path, "r", encoding="utf-8") as f:
@@ -56,7 +59,7 @@ def load_aspect(exp=None):
         aspects = []
         for key, value in data[exp].items():
             aspects.append((value, key))
-            
+
         return aspects
 
     return False
@@ -72,8 +75,8 @@ class MultiCheckboxField(SelectMultipleField):
 class GameForm(FlaskForm):
     # ゲームタイトル
     title = StringField("ゲームタイトル：")
-    
-    # 経験的価値の観点
+
+    # 経験価値の観点
     asp_sense = MultiCheckboxField("SENSE", choices=load_aspect("SENSE"), coerce=int)
     asp_feel = MultiCheckboxField("FEEL", choices=load_aspect("FEEL"), coerce=int)
     asp_think = MultiCheckboxField("THINK", choices=load_aspect("THINK"), coerce=int)
