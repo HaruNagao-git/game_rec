@@ -1,4 +1,4 @@
 # データベースに関するファイル群を追跡対象外に設定
 instance/
 migrations/
-__pycache__/
+**/__pycache__/
