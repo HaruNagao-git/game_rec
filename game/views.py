@@ -1,8 +1,8 @@
 from flask import render_template, redirect, url_for, Blueprint, session, request
 from flask_login import login_required
-from forms import GameForm
+from forms import generate_game_form, load_viewpoint_choices
 import json
-from models import Base, Image, Video, Aspect, BaseAspect, db
+from models import Base, Image, Video, Viewpoint, BaseViewpoint, db
 from sqlalchemy import func, desc
 
 # gameのBlueprintを作成
@@ -17,31 +17,29 @@ game_bp = Blueprint("game", __name__, url_prefix="/game")
 @login_required
 def search():
     # フォームの生成
-    form = GameForm(request.form)
+    viewpoint_choices = load_viewpoint_choices()
+    form = generate_game_form(viewpoint_choices)(request.form)
     # POSTメソッドの場合
     if form.validate_on_submit():
         # テキストフォームの入力値を取得
         title = form.title.data
         # チェックボックスフォームの入力値を取得
         # 入力値をリスト型にまとめる
-        aspects = []
-        if form.asp_sense.data:
-            aspects.extend(form.asp_sense.data)
-        if form.asp_feel.data:
-            aspects.extend(form.asp_feel.data)
-        if form.asp_think.data:
-            aspects.extend(form.asp_think.data)
-        if form.asp_act.data:
-            aspects.extend(form.asp_act.data)
-        if form.asp_relate.data:
-            aspects.extend(form.asp_relate.data)
-        # aspectsをセッションに保存
-        session["aspects"] = aspects
-        query = title if title else "aspects"
+        viewpoints = []
+        # すべての大グループ・サブグループのフィールドから値を取得
+        for main_group, subgroups in viewpoint_choices.items():
+            for subgroup in subgroups:
+                field_name = f"vp_{main_group}_{subgroup}"
+                field_data = getattr(form, field_name).data
+                if field_data:
+                    viewpoints.extend(field_data)
+        # viewpointsをセッションに保存
+        session["viewpoints"] = viewpoints
+        query = title if title else "viewpoints"
         # 画面遷移
         return redirect(url_for("game.index", query=query))
     # GETメソッドの場合
-    return render_template("game/search_form.html", form=form)
+    return render_template("game/search_form.html", form=form, viewpoint_choices=viewpoint_choices)
 
 
 # 検索結果一覧
@@ -50,26 +48,26 @@ def search():
 def index(query):
     # セッションから観点情報を取得
     # もしセッションに保存されていなければ空の辞書を使用
-    aspects = session.get("aspects", {})
+    viewpoints = session.get("viewpoints", {})
     # 一致するゲーム情報を全取得
     title = query
     games = []
-    # aspectsが空でない場合、選択した観点が存在するゲーム情報を中間テーブルbase_aspectsから取得
-    if aspects:
-        # aspectsリストに含まれる観点IDを取得
-        aspect_objs = Aspect.query.filter(Aspect.aspect_id.in_(aspects)).all()
-        aspect_ids = [a.aspect_id for a in aspect_objs]
+    # viewpointsが空でない場合、選択した観点が存在するゲーム情報を中間テーブルbase_viewpointsから取得
+    if viewpoints:
+        # viewpointsリストに含まれる観点IDを取得
+        viewpoint_objs = Viewpoint.query.filter(Viewpoint.viewpoint_id.in_(viewpoints)).all()
+        viewpoint_ids = [a.viewpoint_id for a in viewpoint_objs]
 
-        # BaseAspectからappidごとに一致数をカウントし、多い順に並べる
-        base_aspects = (
-            db.session.query(Base, func.count(BaseAspect.aspect_id).label("match_count"))
-            .join(BaseAspect, Base.appid == BaseAspect.appid)
-            .filter(BaseAspect.aspect_id.in_(aspect_ids))
+        # BaseViewpointからappidごとに一致数をカウントし、多い順に並べる
+        base_viewpoints = (
+            db.session.query(Base, func.count(BaseViewpoint.viewpoint_id).label("match_count"))
+            .join(BaseViewpoint, Base.appid == BaseViewpoint.appid)
+            .filter(BaseViewpoint.viewpoint_id.in_(viewpoint_ids))
             .group_by(Base.appid)
             .order_by(desc("match_count"))
             .limit(10)  # 上位10件を取得
         )
-        for base, _ in base_aspects.all():
+        for base, _ in base_viewpoints.all():
             # Imageテーブルからの情報を取得
             images = Image.query.filter(Image.appid == base.appid).first()
             games.append(
@@ -81,10 +79,10 @@ def index(query):
                     "header": images.header,
                 }
             )
-    if title != "aspects":
+    if title != "viewpoints":
         # タイトルがある場合は、Baseテーブルからタイトルに一致するゲーム情報を取得
-        base_aspects = db.session.query(Base).filter(Base.name.ilike(f"%{title}%"))
-        for base in base_aspects.all():
+        base_viewpoints = db.session.query(Base).filter(Base.name.ilike(f"%{title}%"))
+        for base in base_viewpoints.all():
             # Imageテーブルからの情報を取得
             images = Image.query.filter(Image.appid == base.appid).first()
             games.append(

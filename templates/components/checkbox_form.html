@@ -1,24 +1,24 @@
-{% macro render_checkbox_form(form, field, exp_label) %}
-    <div class="label-area">
-        <h3>{{exp_label}}</h3>
-        <div class="select-box">
-            <select name="current-position">
-                <option value="">ーー 並び替えオプション ーー</option>
-                <option value="1">オプション１</option>
-                <option value="2">オプション２</option>
-                <option value="3">オプション３</option>
-            </select>
-        </div>
-    </div>
-    <div class="checkbox-area">
-        {% for subfield in field %}
-        {% if subfield != "csrf_token" %}
-            <label>
-                {{subfield}}
-                <span>{{subfield.label.text}}</span>
-            </label>
-        {% endif %}
+{% macro render_checkbox_form(form, viewpoint_choices, main_group) %}
+<details class="details js-details layer1">
+    <summary class="details-summary js-details-summary layer1"><span class="acc-btn"></span>{{ main_group }}</summary>
+    <div class="details-content js-details-content layer1">
+        {% for subgroup, choices in viewpoint_choices[main_group].items() %}
+        <details class="details js-details layer2">
+            <summary class="details-summary js-details-summary layer2"><span class="acc-btn"></span>{{ subgroup }}</summary>
+            <div class="details-content js-details-content layer2">
+                <div class="checkbox-area">
+                    {% set field_name = "vp_" + main_group + "_" + subgroup %}
+                {% if form[field_name] %}
+                    {% for subfield in form[field_name] %}
+                        <label>
+                            {{ subfield }}
+                            <span>{{ subfield.label.text }}</span>
+                        </label>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </details>
         {% endfor %}
-        {{form.csrf_token}}
     </div>
+</details>
 {% endmacro %}

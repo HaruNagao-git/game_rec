@@ -60,42 +60,44 @@ def json2table():
             cur.executemany(all_sql, rows)
 
     # jsonファイルの指定
-    json_paths = "data/json/aspect_word2vec.json"
+    json_paths = "data/json/viewpoint_qwen3.json"
     with open(json_paths, "r", encoding="utf-8") as f:
         data = json.load(f)
 
         # jsonデータをINSERTする
         rows = []
-        for exp in data:
-            for aspect in data[exp]:
-                rows.append([exp, aspect])
+        for main_group_name, main_group in data.items():
+            for subgroup_name, subgroup in main_group.items():
+                for viewpoint_name, _ in subgroup.items():
+                    rows.append([main_group_name, subgroup_name, viewpoint_name])
         # executemany()で複数のINSERTを実行する
-        print("inserting aspect data...")
+        print("inserting viewpoint data...")
         cur.executemany(
-            "INSERT INTO aspects (experience, name) VALUES (?, ?)",
+            "INSERT INTO viewpoints (main_group, subgroup, viewpoint) VALUES (?, ?, ?)",
             rows,
         )
 
-    entity_path = "data/json/entity_word2vec.json"
+    entity_path = "data/json/review_exp.json"
     with open(entity_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
         # jsonデータをINSERTする
         rows = []
-        for appid in data:
-            for exp in data[appid]:
-                for i in range(len(data[appid][exp])):
-                    if "aspect" in data[appid][exp][i]:
-                        aspect = data[appid][exp][i]["aspect"]
-                        aspect_id = cur.execute(
-                            "SELECT aspect_id FROM aspects WHERE experience = ? AND name = ?", (exp, aspect)
-                        ).fetchone()
-                        rows.append([appid, aspect_id[0]])
+        viewpoint_id = 0
+        for main_group_name, main_group in data.items():
+            for subgroup_name, subgroup in main_group.items():
+                for viewpoint_name, review_list in subgroup.items():
+                    viewpoint_id += 1
+                    for review in review_list:
+                        rows.append([int(review["appid"]), viewpoint_id])
+
+        # appid順にソートする
+        rows.sort(key=lambda x: x[0])
 
         # executemany()で複数のINSERTを実行する
-        print("inserting base_aspects data...")
+        print("inserting base_viewpoints data...")
         cur.executemany(
-            "INSERT INTO base_aspects (appid, aspect_id) VALUES (?, ?)",
+            "INSERT INTO base_viewpoints (appid, viewpoint_id) VALUES (?, ?)",
             rows,
         )
 

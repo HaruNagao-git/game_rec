@@ -48,7 +48,7 @@
         }
     }    
 }
-.label-area, .aspect-area {
+.label-area, .viewpoint-area {
     margin-top: 1rem;
 }
 .label-area {
@@ -80,47 +80,130 @@
         }
     }
 }
-.checkbox-area {
-    overflow-y: scroll;
-    margin: 1rem 0;
-    padding: 1rem;
-    outline: 1px solid var(--gray-c);
-    background: #f8f6f2;
-    height: 20vh;
-    label {
-        display: inline-block;
-        margin-right: 1.5rem;
-        margin-bottom: 1rem;
-        cursor: pointer;
-        /* デフォルトのチェックボックスを非表示 */
-        input[type="checkbox"] {
-            opacity: 0;
-            -webkit-appearance: none;
-            appearance: none;
-            position: absolute;
-            /* チェックボックス用の四角形を作る */
-            &+span::before {
-                display: inline-block;
-                content: '';
-                width: 1.5rem;
-                height: 1.5rem;
-                border: 1px solid #bbb;
-                background: #fff;
-                margin: -.125rem .5rem 0 0;
-                vertical-align: middle;
-                font-family: 'Font Awesome 6 Free';
-                font-weight: 900;
-                padding: 2px 2px 2px 5px;
-                line-height: 1.2;
-            }
-            /* チェックが入るとチェックアイコンを表示 */
-            &:checked+span::before {
-                content: '\f00c';
+.details {
+    &.layer1 {
+        border-top: 2px solid #00a5a0;
+        border-left: 2px solid #00a5a0;
+        border-right: 2px solid #00a5a0;
+        &:last-of-type {
+            border-bottom: 2px solid #00a5a0;
+        }
+    }
+    &-summary {
+        position: relative;
+        display: block;
+        color: #fff;
+        font-weight: bold;
+        text-align: center;
+        &.layer1 {
+            background-color: #b2e4e2;
+            font-size: 1.25rem;
+            padding: .875rem;
+            .acc-btn {
+                top: 37%;
             }
         }
-    }   
+        // 最後のlayer2以外は上下にボーダーをつける
+        &.layer2 {
+            background-color: #7fd2cf;
+            font-size: .875rem;
+            padding: .5rem;
+            border-top: 2px solid #00a5a0;
+            border-bottom: 2px solid #00a5a0;
+            &:last-of-type {
+                border-bottom: none;
+            }
+            .acc-btn {
+                top: 26%;
+            }
+        }
+        &:hover {
+            cursor: pointer;
+            opacity: 0.8;
+        }
+        .acc-btn {
+            position: absolute;
+            //top: 37%;
+            left: 10%;
+            width: 1.125rem;
+            height: 1.125rem;
+            transform-origin: center center;
+            transition: .2s;
+            transition-duration: .2s;
+            &:before,
+            &:after {
+                content: "";
+                background-color: #fff;
+                border-radius: 10px;
+                width: 1.125rem;
+                height: .25rem;
+                position: absolute;
+                top: 7px;
+                left: 0;
+                transform-origin: center center;
+            }
+            &:before {
+                width: .25rem;
+                height: 1.125rem;
+                top: 0;
+                left: 7px;
+            }
+        }
+        &.is-active {
+            .acc-btn {
+                -webkit-transform: rotate(-180deg);
+                transform: rotate(-180deg);
+                &:before {
+                    content: none;
+                }	
+            }
+        }
+        &::-webkit-details-marker {
+            display: none;
+        }
+    }
+    .checkbox-area {
+        overflow-y: scroll;
+        margin: 1rem 0;
+        padding: 1rem;
+        outline: 1px solid var(--gray-c);
+        background: #f8f6f2;
+        height: 20vh;
+        label {
+            display: inline-block;
+            margin-right: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            /* デフォルトのチェックボックスを非表示 */
+            input[type="checkbox"] {
+                opacity: 0;
+                -webkit-appearance: none;
+                appearance: none;
+                position: absolute;
+                /* チェックボックス用の四角形を作る */
+                &+span::before {
+                    display: inline-block;
+                    content: '';
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    border: 1px solid #bbb;
+                    background: #fff;
+                    margin: -.125rem .5rem 0 0;
+                    vertical-align: middle;
+                    font-family: 'Font Awesome 6 Free';
+                    font-weight: 900;
+                    padding: 2px 2px 2px 5px;
+                    line-height: 1.2;
+                }
+                /* チェックが入るとチェックアイコンを表示 */
+                &:checked+span::before {
+                    content: '\f00c';
+                }
+            }
+        }   
+    }
 }
-.aspect-area {
+.viewpoint-area {
     position: sticky;
     top: 4rem;
     &-choosed {
@@ -196,10 +279,21 @@
             width: 40vw;
         }
     }
-    .checkbox-area {
-        height: 30vh;
-    }   
-    .aspect-area-choosed {
+    .details {
+        &-summary {
+            &.layer1 {
+                font-size: 1.5rem;
+                padding: 1rem;
+            }
+            &.layer2 {
+                font-size: 1.125rem;
+            }
+        }
+        .checkbox-area {
+            height: 30vh;
+        }   
+    }
+    .viewpoint-area-choosed {
         height: 30vh;
     }
 }

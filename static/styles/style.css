@@ -278,7 +278,7 @@ header a:hover {
   background: var(--gray-5);
 }
 
-.label-area, .aspect-area {
+.label-area, .viewpoint-area {
   margin-top: 1rem;
 }
 
@@ -312,7 +312,82 @@ header a:hover {
   color: var(--gray-b);
 }
 
-.checkbox-area {
+.details.layer1 {
+  border-top: 2px solid #00a5a0;
+  border-left: 2px solid #00a5a0;
+  border-right: 2px solid #00a5a0;
+}
+.details.layer1:last-of-type {
+  border-bottom: 2px solid #00a5a0;
+}
+.details-summary {
+  position: relative;
+  display: block;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+}
+.details-summary.layer1 {
+  background-color: #b2e4e2;
+  font-size: 1.25rem;
+  padding: 0.875rem;
+}
+.details-summary.layer1 .acc-btn {
+  top: 37%;
+}
+.details-summary.layer2 {
+  background-color: #7fd2cf;
+  font-size: 0.875rem;
+  padding: 0.5rem;
+  border-top: 2px solid #00a5a0;
+  border-bottom: 2px solid #00a5a0;
+}
+.details-summary.layer2:last-of-type {
+  border-bottom: none;
+}
+.details-summary.layer2 .acc-btn {
+  top: 26%;
+}
+.details-summary:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+.details-summary .acc-btn {
+  position: absolute;
+  left: 10%;
+  width: 1.125rem;
+  height: 1.125rem;
+  transform-origin: center center;
+  transition: 0.2s;
+  transition-duration: 0.2s;
+}
+.details-summary .acc-btn:before, .details-summary .acc-btn:after {
+  content: "";
+  background-color: #fff;
+  border-radius: 10px;
+  width: 1.125rem;
+  height: 0.25rem;
+  position: absolute;
+  top: 7px;
+  left: 0;
+  transform-origin: center center;
+}
+.details-summary .acc-btn:before {
+  width: 0.25rem;
+  height: 1.125rem;
+  top: 0;
+  left: 7px;
+}
+.details-summary.is-active .acc-btn {
+  transform: rotate(-180deg);
+}
+.details-summary.is-active .acc-btn:before {
+  content: none;
+}
+.details-summary::-webkit-details-marker {
+  display: none;
+}
+.details .checkbox-area {
   overflow-y: scroll;
   margin: 1rem 0;
   padding: 1rem;
@@ -320,14 +395,14 @@ header a:hover {
   background: #f8f6f2;
   height: 20vh;
 }
-.checkbox-area label {
+.details .checkbox-area label {
   display: inline-block;
   margin-right: 1.5rem;
   margin-bottom: 1rem;
   cursor: pointer;
   /* デフォルトのチェックボックスを非表示 */
 }
-.checkbox-area label input[type=checkbox] {
+.details .checkbox-area label input[type=checkbox] {
   opacity: 0;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -336,7 +411,7 @@ header a:hover {
   /* チェックボックス用の四角形を作る */
   /* チェックが入るとチェックアイコンを表示 */
 }
-.checkbox-area label input[type=checkbox] + span::before {
+.details .checkbox-area label input[type=checkbox] + span::before {
   display: inline-block;
   content: "";
   width: 1.5rem;
@@ -350,16 +425,16 @@ header a:hover {
   padding: 2px 2px 2px 5px;
   line-height: 1.2;
 }
-.checkbox-area label input[type=checkbox]:checked + span::before {
+.details .checkbox-area label input[type=checkbox]:checked + span::before {
   content: "\f00c";
 }
 
-.aspect-area {
+.viewpoint-area {
   position: -webkit-sticky;
   position: sticky;
   top: 4rem;
 }
-.aspect-area-choosed {
+.viewpoint-area-choosed {
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -371,14 +446,14 @@ header a:hover {
   height: 20vh;
   overflow-y: scroll;
 }
-.aspect-area-choosed li {
+.viewpoint-area-choosed li {
   color: var(--gray-3);
   font-size: 1rem;
   list-style: disc;
   margin-right: 2rem;
   margin-bottom: 0.5rem;
 }
-.aspect-area input[type=submit] {
+.viewpoint-area input[type=submit] {
   display: inline-block;
   padding: 0.5rem 1rem;
   background: var(--gray-e);
@@ -391,10 +466,10 @@ header a:hover {
   top: -4px;
   transition: 0s;
 }
-.aspect-area input[type=submit]:hover {
+.viewpoint-area input[type=submit]:hover {
   background: var(--gray-5);
 }
-.aspect-area input[type=submit]:active {
+.viewpoint-area input[type=submit]:active {
   top: 0;
   box-shadow: 0 2px var(--gray-b);
 }
@@ -434,10 +509,17 @@ header a:hover {
   .label-area .select-box {
     width: 40vw;
   }
-  .checkbox-area {
+  .details-summary.layer1 {
+    font-size: 1.5rem;
+    padding: 1rem;
+  }
+  .details-summary.layer2 {
+    font-size: 1.125rem;
+  }
+  .details .checkbox-area {
     height: 30vh;
   }
-  .aspect-area-choosed {
+  .viewpoint-area-choosed {
     height: 30vh;
   }
 }

@@ -52,17 +52,18 @@ class SignUpForm(LoginForm):
 
 
 # JSONファイルから選択した経験価値の観点を読み込む関数
-def load_aspect(exp=None):
-    file_path = "data/json/aspect_word2vec.json"
-    with open(file_path, "r", encoding="utf-8") as f:
+def load_viewpoint_choices():
+    json_path = "/data/nagao/game_rec/data/json/viewpoint_qwen3.json"
+    with open(json_path, "r", encoding="utf-8") as f:
         data = json.load(f)
-        aspects = []
-        for key, value in data[exp].items():
-            aspects.append((value, key))
+    group_choices = {}
+    for main_group_name, main_group in data.items():
+        if main_group_name not in group_choices:
+            group_choices[main_group_name] = {}
+        for subgroup_name, viewpoints in main_group.items():
+            group_choices[main_group_name][subgroup_name] = [(id, label) for label, id in viewpoints.items()]
 
-        return aspects
-
-    return False
+    return group_choices
 
 
 # チェックボックスを複数選択するためのフィールド
@@ -71,17 +72,16 @@ class MultiCheckboxField(SelectMultipleField):
     option_widget = widgets.CheckboxInput()
 
 
-# ゲーム検索用入力クラス
-class GameForm(FlaskForm):
-    # ゲームタイトル
-    title = StringField("ゲームタイトル：")
+# ゲーム検索用フォームを生成する関数
+def generate_game_form(viewpoint_choices):
+    class DynamicGameForm(FlaskForm):
+        title = StringField("ゲームタイトル：")
+        submit = SubmitField("検索")
 
-    # 経験価値の観点
-    asp_sense = MultiCheckboxField("SENSE", choices=load_aspect("SENSE"), coerce=int)
-    asp_feel = MultiCheckboxField("FEEL", choices=load_aspect("FEEL"), coerce=int)
-    asp_think = MultiCheckboxField("THINK", choices=load_aspect("THINK"), coerce=int)
-    asp_act = MultiCheckboxField("ACT", choices=load_aspect("ACT"), coerce=int)
-    asp_relate = MultiCheckboxField("RELATE", choices=load_aspect("RELATE"), coerce=int)
-
-    # 検索ボタン
-    submit = SubmitField("検索")
+    # 大グループごとにサブグループ単位でフィールド追加
+    for main_group, subgroups in viewpoint_choices.items():
+        for subgroup, choices in subgroups.items():
+            field = MultiCheckboxField(f"{main_group} - {subgroup}", coerce=int, choices=choices)
+            # フィールド名例: vp_SENSE_graphics
+            setattr(DynamicGameForm, f"vp_{main_group}_{subgroup}", field)
+    return DynamicGameForm

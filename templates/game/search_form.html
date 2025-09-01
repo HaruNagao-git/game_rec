@@ -18,9 +18,9 @@
 <h2 class="game-title">ゲーム検索</h2>
 <form class="wrapper" action="{{url_for('game.search')}}" method="POST" novalidate>
     <aside>
-        <div class="aspect-area">  
+        <div class="viewpoint-area">  
             <h3>選択した観点</h3>
-            <ul class="aspect-area-choosed"></ul>
+            <ul class="viewpoint-area-choosed"></ul>
             {{form.submit(class="btn", value="観点で検索")}}
         </div>
         {% if form.title.errors %}
@@ -32,16 +32,15 @@
         {% endif %}
     </aside>
     <main>
-        {{form.hidden_tag()}}
+        {{ form.hidden_tag() }}
         {% from 'components/checkbox_form.html' import render_checkbox_form %}
-        {{render_checkbox_form(form, form.asp_sense, "SENSE")}}
-        {{render_checkbox_form(form, form.asp_feel, "FEEL")}}
-        {{render_checkbox_form(form, form.asp_think, "THINK")}}
-        {{render_checkbox_form(form, form.asp_act, "ACT")}}
-        {{render_checkbox_form(form, form.asp_relate, "RELATE")}}
+        {% for main_group in viewpoint_choices.keys() %}
+            {{ render_checkbox_form(form, viewpoint_choices, main_group) }}
+        {% endfor %}
     </main>
 </form>
 {% endblock %}
 {% block script %}
-<script src="{{url_for('static', filename='scripts/aspect-area.js')}}"></script>
+<script src="{{url_for('static', filename='scripts/viewpoint-area.js')}}"></script>
+<script src="{{url_for('static', filename='scripts/accordion.js')}}"></script>
 {% endblock %}

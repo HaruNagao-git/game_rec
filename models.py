@@ -77,21 +77,23 @@ class Video(db.Model):
 
 
 # 観点情報
-class Aspect(db.Model):
+class Viewpoint(db.Model):
     # テーブル名
-    __tablename__ = "aspects"
+    __tablename__ = "viewpoints"
     # 観点ID(PK)
-    aspect_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    # 観点の経験価値
-    experience = db.Column(db.String(6), nullable=False)
+    viewpoint_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # 観点のメイングループ
+    main_group = db.Column(db.String(6), nullable=False)
+    # 観点のサブグループ
+    subgroup = db.Column(db.String(20), nullable=False)
     # 観点名
-    name = db.Column(db.String(10), nullable=False)
+    viewpoint = db.Column(db.String(30), nullable=False)
 
 
 # 中間テーブル（多対多リレーション）
-class BaseAspect(db.Model):
+class BaseViewpoint(db.Model):
     # テーブル名
-    __tablename__ = "base_aspects"
+    __tablename__ = "base_viewpoints"
     # ID(PK)
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     # APPID(FK)
@@ -101,8 +103,8 @@ class BaseAspect(db.Model):
         nullable=False,
     )
     # 観点ID(FK)
-    aspect_id = db.Column(db.Integer, db.ForeignKey("aspects.aspect_id"), nullable=False)
+    viewpoint_id = db.Column(db.Integer, db.ForeignKey("viewpoints.viewpoint_id"), nullable=False)
 
     # リレーション
-    base = db.relationship(Base, backref=db.backref("aspects", lazy="dynamic"))
-    aspect = db.relationship(Aspect, backref=db.backref("bases", lazy="dynamic"))
+    base = db.relationship(Base, backref=db.backref("viewpoints", lazy="dynamic"))
+    viewpoint = db.relationship(Viewpoint, backref=db.backref("bases", lazy="dynamic"))
