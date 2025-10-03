@@ -2,6 +2,29 @@
 --------------------------------------------------- */
 .media {
     &-main {
+        .media-loading {
+            position: absolute;
+            top:0;
+            left:0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(30, 30, 30, 0.4);
+            z-index: 100;
+            .spinner {
+                border: 6px solid var(--gray-6);
+                border-top: 6px solid var(--media-player);
+                border-radius: 50%;
+                width: 48px;
+                height: 48px;
+                animation: spin 1s linear infinite;
+            }
+        }
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
         margin-bottom: .5rem;
         background-color: var(--black);
         width: 100%;
@@ -20,6 +43,221 @@
         }
         .hidden {
             display: none;
+        }
+        .custom-video-player {
+            background: #222;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+            max-width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+            .controls {
+                color: var(--white);
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                display: block;
+                background: rgba(40, 40, 40, 0.6); // 半透明
+                transition: opacity 0.3s;
+                opacity: 1;
+                padding-bottom: .25rem;
+                .button-area {
+                    .former,.latter {
+                        display: flex;
+                    }
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    .former {
+                        display: flex;
+                        margin-left: .5rem;
+                        .play-btn,
+                        .seek-btn,
+                        .fullscreen-btn {
+                            color: var(--white);
+                            border: none;
+                            border-radius: 4px;
+                            width: 1.75rem;
+                            height: 1.75rem;
+                            font-size: 1rem;
+                            text-align: center;
+                            cursor: pointer;
+                            transition: background 0.2s;
+                        }
+                        .play-btn:hover,
+                        .seek-btn:hover,
+                        .fullscreen-btn:hover {
+                            background: var(--media-player);
+                        }
+                        .time-txt {
+                            font-size: 0.75rem;
+                            padding-top: .375rem;
+                            margin-left: .25rem;
+                            user-select: none;
+                        }
+                    }
+                    .latter {
+                        margin-right: .5rem;
+                        .volume-control,
+                        .settings-control, 
+                        .fullscreen-btn {
+                            color: var(--white);
+                            border: none;
+                            border-radius: 4px;
+                            width: 1.75rem;
+                            height: 1.75rem;
+                            font-size: 1rem;
+                            text-align: center;
+                            cursor: pointer;
+                            transition: background 0.2s;
+                        }
+                        .volume-control:hover,
+                        .settings-control:hover, 
+                        .fullscreen-btn:hover {
+                            background: var(--media-player);
+                        }
+                        .volume-control {
+                            position: relative;
+                            display: inline-block;
+                            .volume-icon {
+                                background: none;
+                                border: none;
+                                cursor: pointer;
+                            }
+                        }
+                        .volume-bar {
+                            position: absolute;
+                            left: 45%;
+                            bottom: .75rem;
+                            transform: translateX(-120%) rotate(-180deg);
+                            border-radius: 4px;
+                            width: 5rem;
+                            height: .25rem;
+                            accent-color: var(--media-player);
+                            opacity: 0;
+                            pointer-events: none;
+                            transition: opacity 0.2s;
+                            background: linear-gradient(
+                                to right,
+                                var(--media-player) 0%,
+                                var(--media-player) var(--vol-progress, 100%),
+                                var(--gray-4) var(--vol-progress, 100%),
+                                var(--gray-4) 100%
+                            );
+                            transition: background 0.2s;
+                            z-index: 10;
+                            &.show {
+                                opacity: 1;
+                                pointer-events: auto;
+                            }
+                        }
+                        .volume-control:hover .volume-bar {
+                            display: block;
+                        }
+                        .settings-control {
+                            position: relative;
+                            display: inline-block;
+                            .settings-btn {
+                                background: none;
+                                border: none;
+                                color: #fff;
+                                font-size: 1.125rem;
+                                cursor: pointer;
+                            }
+                            .quality-menu {
+                                position: absolute;
+                                bottom: 2.5rem;
+                                right: 0;
+                                background: #222;
+                                border-radius: 8px;
+                                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                                z-index: 10;
+                                min-width: 120px;
+                                ul { 
+                                    margin: 0; 
+                                    padding: 0; 
+                                    list-style: none; 
+                                }
+                                li {
+                                    color: #fff;
+                                    padding: 0.5rem 1rem;
+                                    cursor: pointer;
+                                    &:hover, &.selected { 
+                                        background: #00a5a0; 
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .time-bar-area {
+                    position: relative;
+                    margin: 0 .5rem;
+                    .time-bar {
+                        width: 100%;
+                        height: 4px;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        background: linear-gradient(
+                            to right,
+                            var(--media-player) 0%,
+                            var(--media-player) var(--progress, 0%),
+                            var(--gray-4) var(--progress, 0%),
+                            var(--gray-4) 100%
+                        );
+                        appearance: none;
+                        outline: none;
+                        transition: background 0.2s;
+                        &::-webkit-slider-thumb {
+                            width: 20px;
+                            height: 20px;
+                            border-radius: 4px;
+                            background: var(--media-player);
+                            border: none;
+                            cursor: pointer;
+                        }
+                    }
+                    .time-indicator {
+                        position: absolute;
+                        top: -2rem;
+                        left: 0;
+                        background: rgba(40,40,40,0.9);
+                        color: #fff;
+                        padding: 2px 8px;
+                        border-radius: 6px;
+                        font-size: 1rem;
+                        pointer-events: none;
+                        white-space: nowrap;
+                        z-index: 20;
+                        transform: translateX(-50%);
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                    }
+                }
+            }
+            &.hide-controls .controls {
+                opacity: 0;
+                pointer-events: none;
+            }
+            &.fullscreen {
+                position: fixed;
+                top: 0;
+                left: 0; 
+                right: 0; 
+                bottom: 0;
+                width: 100vw;
+                height: 100vh;
+                z-index: 9999;
+                background: #000;
+                border-radius: 0;
+                .controls { 
+                    border-radius: 0; 
+                }
+                video { 
+                    width: 100vw;
+                    height: 100vh; 
+                    object-fit: contain;
+                }
+            }
         }
     }
     &-sub {
@@ -45,7 +283,7 @@
                     vertical-align: top;
                 }
                 &.current {
-                    outline: 3px solid #00BFFF;
+                    outline: 3px solid var(--media-player);
                     outline-offset: 1px;
                 }
             }
@@ -92,16 +330,17 @@
         &::before {
             background: var(--white);
             border-radius: 2px;
-            height: 10px !important;
+            height: 11px !important;
             margin-left: 2px;
-            margin-right: 3px;
         }
         &.simplebar-visible::before {
             opacity: 1;
         }
     }
     &-hover {
-        background: #4682b4;
+        &::before {
+            background: var(--gray-e) !important;
+        }
     }
     &-track {
         background: #cbd2e0;

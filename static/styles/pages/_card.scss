@@ -1,11 +1,14 @@
 /* CARD
 --------------------------------------------------- */
-.background-img, .card-container {
+.background-img,
+.card-container {
     height: 100vh;
 }
+
 .background-img {
     object-fit: cover;
 }
+
 .card-container {
     position: absolute;
     top: 0;
@@ -15,6 +18,7 @@
     align-items: center;
     width: 100%;
     background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, var(--gray-c) 3px, var(--gray-c) 4px);
+
     .card {
         box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
         padding: 2rem 1rem;
@@ -23,22 +27,30 @@
         border-radius: 8px;
         width: 100%;
         max-width: 400px;
-        &-title, &-link {
+
+        &-title,
+        &-link {
             text-align: center;
         }
+
         &-title {
             margin: 1.5rem 0;
         }
+
         &-link {
             margin: 1rem 0;
         }
+
         &-form {
             margin-bottom: 1.25rem;
-            input[type="text"], input[type="password"] {
+
+            input[type="text"],
+            input[type="password"] {
                 width: 100%;
                 padding: .5rem;
                 border: 1px solid var(--gray-c);
                 border-radius: 4px;
+
                 &:focus {
                     border-color: #66afe9;
                     outline: 0;

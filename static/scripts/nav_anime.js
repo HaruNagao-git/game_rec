@@ -1,12 +1,12 @@
 'use strict';
 
-const btn = document.querySelector('.btn-menu');
-const nav = document.querySelector('.main-nav');
-btn.addEventListener('click', () => {
-	nav.classList.toggle('open-menu');
-	if (btn.innerHTML == 'Menu') {
-		btn.innerHTML = 'Close';
+const $btn = $('.btn-menu');
+const $nav = $('.main-nav');
+$btn.on('click', () => {
+	$nav.toggleClass('open-menu');
+	if ($btn.text() == 'Menu') {
+		$btn.text('Close');
 	} else {
-		btn.innerHTML = 'Menu';
+		$btn.text('Menu');
 	}
 });

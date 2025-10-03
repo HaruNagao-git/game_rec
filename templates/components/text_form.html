@@ -1,14 +1,14 @@
 {% macro render_text_form(form, field, class, placeholder) %}
-    <div class="search-form">
-        <!-- テキストボックスと検索ボタンは横並び -->
-        {{field(class=class, placeholder=placeholder)|safe}}
-        {{form.submit(class="btn", value="検索")}}
-    </div>
-    {% if field.errors %}
-    <ul class="text-danger">
-        {% for error in field.errors %}
-        <li>{{error}}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+<div class="search-form">
+    <!-- テキストボックスと検索ボタンは横並び -->
+    {{field(class=class, placeholder=placeholder)|safe}}
+    {{form.submit(class="btn", value="検索")}}
+</div>
+{% if field.errors %}
+<ul class="text-danger">
+    {% for error in field.errors %}
+    <li>{{error}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 {% endmacro %}

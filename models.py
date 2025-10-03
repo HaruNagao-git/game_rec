@@ -56,6 +56,8 @@ class Image(db.Model):
     header = db.Column(db.String(200))
     # screenshots(list)
     screenshots = db.Column(db.Text)
+    # fullsize screenshots(list)
+    screenshots_full = db.Column(db.Text)
 
 
 # 動画情報
@@ -76,18 +78,30 @@ class Video(db.Model):
     video_max = db.Column(db.String(200))
 
 
+# レビュー情報
+class Review(db.Model):
+    # テーブル名
+    __tablename__ = "reviews"
+    # ID(PK)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # REVIEW_ID
+    review_id = db.Column(db.String(20))
+    # レビュー全文(Text)
+    review_text = db.Column(db.Text)
+
+
 # 観点情報
 class Viewpoint(db.Model):
     # テーブル名
     __tablename__ = "viewpoints"
     # 観点ID(PK)
-    viewpoint_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    vp_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     # 観点のメイングループ
     main_group = db.Column(db.String(6), nullable=False)
     # 観点のサブグループ
     subgroup = db.Column(db.String(20), nullable=False)
-    # 観点名
-    viewpoint = db.Column(db.String(30), nullable=False)
+    # 観点の類似評価グループ
+    sim_group = db.Column(db.String(30), nullable=False)
 
 
 # 中間テーブル（多対多リレーション）
@@ -102,9 +116,18 @@ class BaseViewpoint(db.Model):
         db.ForeignKey("bases.appid"),
         nullable=False,
     )
+    # レビューID(FK)
+    review_id = db.Column(db.String(20), db.ForeignKey("reviews.review_id"), nullable=False)
     # 観点ID(FK)
-    viewpoint_id = db.Column(db.Integer, db.ForeignKey("viewpoints.viewpoint_id"), nullable=False)
+    vp_id = db.Column(db.Integer, db.ForeignKey("viewpoints.vp_id"), nullable=False)
+    # 観点(string)
+    vp_name = db.Column(db.String(50))
+    # 評価(Text)
+    evaluation = db.Column(db.Text)
+    # 評価文(Text)
+    eval_sentence = db.Column(db.Text)
 
     # リレーション
     base = db.relationship(Base, backref=db.backref("viewpoints", lazy="dynamic"))
     viewpoint = db.relationship(Viewpoint, backref=db.backref("bases", lazy="dynamic"))
+    review = db.relationship(Review, backref=db.backref("base_viewpoints", lazy="dynamic"))

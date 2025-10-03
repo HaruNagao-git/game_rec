@@ -1,24 +1,24 @@
 {% extends 'game_base.html' %}
 {% block search_form %}
-    <form action="{{url_for('game.search')}}" method="POST" novalidate>
-        {{form.hidden_tag()}}
-        <div class="search-form">
-            <!-- テキストボックスと検索ボタンは横並び -->
-            {{form.title(class="form-control", placeholder="タイトルを入力（例：FINAL FANTASY）")|safe}}
+<form action="{{url_for('game.search')}}" method="POST" novalidate>
+    {{form.hidden_tag()}}
+    <div class="search-form">
+        <!-- テキストボックスと検索ボタンは横並び -->
+        {{form.title(class="form-control", placeholder="タイトルを入力（例：FINAL FANTASY）")|safe}}
         <!--{{form.submit(class="btn", value="検索")}}-->
-            <span>
-                <button class="name-search-btn" type="submit" aria-label="Search">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
-            </span>
-        </div>
-    </form>
+        <span>
+            <button class="name-search-btn" type="submit" aria-label="Search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+        </span>
+    </div>
+</form>
 {% endblock %}
 {% block content %}
 <h2 class="game-title">ゲーム検索</h2>
 <form class="wrapper" action="{{url_for('game.search')}}" method="POST" novalidate>
     <aside>
-        <div class="viewpoint-area">  
+        <div class="viewpoint-area">
             <h3>選択した観点</h3>
             <ul class="viewpoint-area-choosed"></ul>
             {{form.submit(class="btn", value="観点で検索")}}
@@ -35,12 +35,11 @@
         {{ form.hidden_tag() }}
         {% from 'components/checkbox_form.html' import render_checkbox_form %}
         {% for main_group in viewpoint_choices.keys() %}
-            {{ render_checkbox_form(form, viewpoint_choices, main_group) }}
+        {{ render_checkbox_form(form, viewpoint_choices, main_group) }}
         {% endfor %}
     </main>
 </form>
 {% endblock %}
 {% block script %}
 <script src="{{url_for('static', filename='scripts/viewpoint-area.js')}}"></script>
-<script src="{{url_for('static', filename='scripts/accordion.js')}}"></script>
 {% endblock %}

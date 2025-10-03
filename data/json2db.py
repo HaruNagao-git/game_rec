@@ -38,15 +38,19 @@ def json2table():
                         ]
                     )
             elif info_name == "image":
-                all_sql = insert_sql + "(appid, capsule, capsule_v5, header, screenshots) VALUES (?, ?, ?, ?, ?)"
-                for obj in data:
+                all_sql = (
+                    insert_sql
+                    + "(appid, capsule, capsule_v5, header, screenshots, screenshots_full) VALUES (?, ?, ?, ?, ?, ?)"
+                )
+                for appid, obj in data.items():
                     rows.append(
                         [
-                            obj["appid"],
+                            int(appid),
                             obj["capsule"],
                             obj["capsule_v5"],
                             obj["header"],
                             json.dumps(obj["screenshots"], ensure_ascii=False),
+                            json.dumps(obj["screenshots_full"], ensure_ascii=False),
                         ]
                     )
             elif info_name == "video":
@@ -56,6 +60,11 @@ def json2table():
                         rows.append(
                             [int(appid), video["name"], video["thumbnail"], video["video_480p"], video["video_max"]]
                         )
+            elif info_name == "review":
+                all_sql = insert_sql + "(review_id, review_text) VALUES (?, ?)"
+                for _, review_obj in data.items():
+                    for review in review_obj["reviews"]:
+                        rows.append([review["id"], review["text"]])
 
             cur.executemany(all_sql, rows)
 
@@ -71,9 +80,9 @@ def json2table():
                 for viewpoint_name, _ in subgroup.items():
                     rows.append([main_group_name, subgroup_name, viewpoint_name])
         # executemany()で複数のINSERTを実行する
-        print("inserting viewpoint data...")
+        print(f"inserting viewpoint data from {json_paths}...")
         cur.executemany(
-            "INSERT INTO viewpoints (main_group, subgroup, viewpoint) VALUES (?, ?, ?)",
+            "INSERT INTO viewpoints (main_group, subgroup, sim_group) VALUES (?, ?, ?)",
             rows,
         )
 
@@ -89,15 +98,24 @@ def json2table():
                 for viewpoint_name, review_list in subgroup.items():
                     viewpoint_id += 1
                     for review in review_list:
-                        rows.append([int(review["appid"]), viewpoint_id])
+                        rows.append(
+                            [
+                                int(review["appid"]),
+                                int(review["id"]),
+                                viewpoint_id,
+                                review["viewpoint"],
+                                review["evaluation"],
+                                review["eval_sentence"],
+                            ]
+                        )
 
         # appid順にソートする
         rows.sort(key=lambda x: x[0])
 
         # executemany()で複数のINSERTを実行する
-        print("inserting base_viewpoints data...")
+        print(f"inserting base_viewpoints data from {entity_path}...")
         cur.executemany(
-            "INSERT INTO base_viewpoints (appid, viewpoint_id) VALUES (?, ?)",
+            "INSERT INTO base_viewpoints (appid, review_id, vp_id, vp_name, evaluation, eval_sentence) VALUES (?, ?, ?, ?, ?, ?)",
             rows,
         )
 

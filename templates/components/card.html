@@ -1,41 +1,41 @@
 {% macro render_card(title, action_func, form, msg, trans_func) %}
-    <img class="background-img" src="" alt="">
-    <div class="card-container">
-        <div class="card">
-            <h1 class="card-title">{{title}}</h1>
-            <form action="{{action_func}}" method="POST" novalidate>
-                {{form.hidden_tag()}}
-                <div class="card-form">
-                    {{form.username(class="form-control", placeholder="ユーザ名")|safe}}
-                    {% if form.username.errors %}
-                        <ul class="text-danger">
-                            {% for error in form.username.errors %}
-                                <li>{{error}}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-                <div class="card-form">
-                    {{form.password(class="form-control", placeholder="パスワード")|safe}}
-                    <small>英数字と【!@#$%^&*()】で4～10文字</small>
-                    {% if form.password.errors %}
-                        <ul class="text-danger">
-                            {% for error in form.password.errors %}
-                                <li>{{error}}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-                <!--Flashメッセージ-->
-                {% from 'components/flash.html' import flash %}
-                {{ flash(get_flashed_messages()) }}
-                <div class="d-grid">
-                    {{form.submit(class="btn btn-primary btn-block")}}
-                </div>
-            </form>
-            <p class="card-link">
-                {{msg}}は、<a href="{{trans_func}}">こちら</a>
-            </p>
-        </div>
+<img class="background-img" src="" alt="">
+<div class="card-container">
+    <div class="card">
+        <h1 class="card-title">{{title}}</h1>
+        <form action="{{action_func}}" method="POST" novalidate>
+            {{form.hidden_tag()}}
+            <div class="card-form">
+                {{form.username(class="form-control", placeholder="ユーザ名")|safe}}
+                {% if form.username.errors %}
+                <ul class="text-danger">
+                    {% for error in form.username.errors %}
+                    <li>{{error}}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <div class="card-form">
+                {{form.password(class="form-control", placeholder="パスワード")|safe}}
+                <small>英数字と【!@#$%^&*()】で4～10文字</small>
+                {% if form.password.errors %}
+                <ul class="text-danger">
+                    {% for error in form.password.errors %}
+                    <li>{{error}}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <!--Flashメッセージ-->
+            {% from 'components/flash.html' import flash %}
+            {{ flash(get_flashed_messages()) }}
+            <div class="d-grid">
+                {{form.submit(class="btn btn-primary btn-block")}}
+            </div>
+        </form>
+        <p class="card-link">
+            {{msg}}は、<a href="{{trans_func}}">こちら</a>
+        </p>
     </div>
+</div>
 {% endmacro %}

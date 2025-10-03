@@ -6,6 +6,7 @@
     overflow: hidden;
     font-weight: normal;
     text-align: justify;
+
     h2 {
         font-size: 1rem;
         text-transform: uppercase;
@@ -16,15 +17,18 @@
         padding: .3rem 0;
         border-bottom: 1px solid #ddd;
     }
+
     .bb {
         &_img_ctn {
             position: relative;
             display: inline-block;
         }
+
         &_img {
             margin: 1rem 0;
             width: 100%;
         }
+
         &_tag {
             margin-top: 1.125rem;
             margin-bottom: 0;
@@ -34,42 +38,53 @@
             text-transform: none;
             letter-spacing: 0;
         }
+
         &_paragraph {
             min-height: .15rem;
             line-height: 1.5;
             margin: 0.5rem 0;
         }
+
         &_ul {
             color: var(--gray-3);
             list-style-type: square;
         }
     }
-    .ag_box,.description {
+
+    .ag_box,
+    .description {
         overflow: hidden;
         height: 30vh;
         transition: all 0.5s;
     }
+
     .ag-box {
         position: relative;
+
         input {
             display: none;
-            &:checked + label {
+
+            &:checked+label {
                 /* 開いたときにグラデーションを消す */
                 background: inherit;
+
                 &::after {
                     content: '閉じる';
                 }
+
                 &::before {
                     left: calc(50% - 2.5em);
-                    transform: scale(1,-1);
+                    transform: scale(1, -1);
                 }
             }
-            &:checked ~ .description {
+
+            &:checked~.description {
                 height: auto;
                 padding-bottom: 80px;
                 transition: all 0.5s;
             }
         }
+
         label {
             position: absolute;
             display: flex;
@@ -78,15 +93,19 @@
             z-index: 1;
             bottom: -10px;
             width: 100%;
-            height: 140px; /* グラデーションの高さ */
+            height: 140px;
+            /* グラデーションの高さ */
             cursor: pointer;
             text-align: center;
             background: linear-gradient(to bottom, rgba(250, 252, 252, 0) 0%, rgba(250, 252, 252, 0.95) 90%);
-            &::after,&::before {
+
+            &::after,
+            &::before {
                 content: '';
                 position: absolute;
                 line-height: 2.5rem;
             }
+
             &::after {
                 z-index: 2;
                 bottom: 20px;
@@ -96,6 +115,7 @@
                 background: var(--gray-3);
                 border-radius: 20px;
             }
+
             &::before {
                 position: absolute;
                 bottom: 38px;
@@ -108,11 +128,13 @@
             }
         }
     }
+
     .description {
         color: var(--gray-3);
         line-height: 1.6;
     }
 }
+
 /* DESKTOP */
 @media screen and (min-width: 768px) {
     .bb_ul {

@@ -1,7 +1,7 @@
 'use strict';
 
 // デスクトップ時とモバイル時で、ログイン画面の背景画像を変更
-$(document).ready(function() {
+$(document).ready(function () {
     function updateDisplay() {
         var isWideScreen = $(window).width() >= 768;
         var img_path = isWideScreen ? desktopImgPath : mobileImgPath;
@@ -14,7 +14,7 @@ $(document).ready(function() {
     updateDisplay();
 
     // ウィンドウリサイズ時に再実行
-    $(window).resize(function() {
+    $(window).resize(function () {
         updateDisplay();
     });
 });

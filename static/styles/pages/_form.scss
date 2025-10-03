@@ -56,8 +56,8 @@
     gap: 1rem;
     .select-box {
         position: relative;
-        border: 1px solid #bbb;
-        background: #fff;
+        border: 1px solid var(--gray-b);
+        background: var(--white);
         padding: .5rem;
         width: 100%;
         select {
@@ -80,74 +80,66 @@
         }
     }
 }
+.checkbox-group {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    overflow-y: visible;
+    margin-bottom: 1rem;
+    width: 100%;
+    white-space: nowrap;
+    min-width: 0;
+}
 .details {
+    flex: 0 0 auto; // 幅固定で折り返さない
+    min-width: 220px; // 必要に応じて調整
+    margin-right: .5rem;
     &.layer1 {
-        border-top: 2px solid #00a5a0;
-        border-left: 2px solid #00a5a0;
-        border-right: 2px solid #00a5a0;
-        &:last-of-type {
-            border-bottom: 2px solid #00a5a0;
-        }
+        width: 45%;
+    }
+    &.SENSE {
+        border: 2px solid var(--SENSE-border);
+    }
+    &.FEEL {
+        border: 2px solid var(--FFEL-border);
+    }
+    &.THINK {
+        border: 2px solid var(--THINK-border);
+    }
+    &.ACT {
+        border: 2px solid var(--ACT-border);
+    }
+    &.RELATE {
+        border: 2px solid var(--RELATE-border);
     }
     &-summary {
         position: relative;
         display: block;
-        color: #fff;
+        color: var(--white);
         font-weight: bold;
         text-align: center;
         &.layer1 {
-            background-color: #b2e4e2;
-            font-size: 1.25rem;
-            padding: .875rem;
-            .acc-btn {
-                top: 37%;
-            }
-        }
-        // 最後のlayer2以外は上下にボーダーをつける
-        &.layer2 {
-            background-color: #7fd2cf;
-            font-size: .875rem;
+            font-size: 1rem;
             padding: .5rem;
-            border-top: 2px solid #00a5a0;
-            border-bottom: 2px solid #00a5a0;
-            &:last-of-type {
-                border-bottom: none;
-            }
-            .acc-btn {
-                top: 26%;
-            }
+        }
+        &.SENSE {
+            background: var(--SENSE-color);
+        }
+        &.FEEL {
+            background: var(--FEEL-color);
+        }
+        &.THINK {
+            background: var(--THINK-color);
+        }
+        &.ACT {
+            background: var(--ACT-color);
+        }
+        &.RELATE {
+            background: var(--RELATE-color);
         }
         &:hover {
             cursor: pointer;
             opacity: 0.8;
-        }
-        .acc-btn {
-            position: absolute;
-            //top: 37%;
-            left: 10%;
-            width: 1.125rem;
-            height: 1.125rem;
-            transform-origin: center center;
-            transition: .2s;
-            transition-duration: .2s;
-            &:before,
-            &:after {
-                content: "";
-                background-color: #fff;
-                border-radius: 10px;
-                width: 1.125rem;
-                height: .25rem;
-                position: absolute;
-                top: 7px;
-                left: 0;
-                transform-origin: center center;
-            }
-            &:before {
-                width: .25rem;
-                height: 1.125rem;
-                top: 0;
-                left: 7px;
-            }
         }
         &.is-active {
             .acc-btn {
@@ -163,8 +155,9 @@
         }
     }
     .checkbox-area {
+        display: flex;
+        flex-wrap: wrap;
         overflow-y: scroll;
-        margin: 1rem 0;
         padding: 1rem;
         outline: 1px solid var(--gray-c);
         background: #f8f6f2;
@@ -173,6 +166,9 @@
             display: inline-block;
             margin-right: 1.5rem;
             margin-bottom: 1rem;
+            span {
+                font-size: .75rem;
+            }
             cursor: pointer;
             /* デフォルトのチェックボックスを非表示 */
             input[type="checkbox"] {
@@ -186,8 +182,8 @@
                     content: '';
                     width: 1.5rem;
                     height: 1.5rem;
-                    border: 1px solid #bbb;
-                    background: #fff;
+                    border: 1px solid var(--gray-b);
+                    background: var(--white);
                     margin: -.125rem .5rem 0 0;
                     vertical-align: middle;
                     font-family: 'Font Awesome 6 Free';
@@ -238,7 +234,7 @@
         top: -4px;
         transition: 0s;
         &:hover {
-            background: var(--gray-5);
+            background: var(--gray-d);
         }
         &:active {
             top: 0;
@@ -282,15 +278,15 @@
     .details {
         &-summary {
             &.layer1 {
-                font-size: 1.5rem;
-                padding: 1rem;
-            }
-            &.layer2 {
                 font-size: 1.125rem;
+                padding: .75rem;
             }
         }
         .checkbox-area {
             height: 30vh;
+            label span {
+                font-size: 1rem;
+            }
         }   
     }
     .viewpoint-area-choosed {

@@ -1,0 +1,103 @@
+.review-info {
+    line-height: 1.6;
+    overflow: hidden;
+    font-weight: normal;
+    text-align: justify;
+
+    h2 {
+        font-size: 1rem;
+        text-transform: uppercase;
+        color: var(--gray-3);
+        letter-spacing: 0.03em;
+        font-weight: normal;
+        margin-bottom: 0.5rem;
+        padding: .3rem 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .review-panel {
+        border: 1px solid var(--gray-d);
+        border-radius: 8px;
+        padding: 1rem 1rem .5rem;
+        margin-bottom: 1rem;
+
+        .review-text {
+            text-align: justify;
+            height: 30vh;
+            overflow-y: scroll;
+            margin-bottom: 1rem;
+            padding: 1rem .5rem;
+            background-color: var(--gray-e);
+            border-radius: 4px;
+
+            p {
+                font-size: .875rem;
+            }
+        }
+
+        .vp-info {
+            font-size: .75rem;
+
+            .sim-group,
+            .vp-name,
+            .eval-sentence {
+                margin-bottom: .25rem;
+            }
+
+            .sim-group {
+                span {
+                    color: var(--gray-5);
+                    border-radius: 8px;
+                    padding: .125rem .25rem;
+                }
+
+                .main-group-SENSE {
+                    background-color: var(--SENSE-color);
+                }
+
+                .main-group-FEEL {
+                    background-color: var(--FEEL-color);
+                }
+
+                .main-group-THINK {
+                    background-color: var(--THINK-color);
+                }
+
+                .main-group-ACT {
+                    background-color: var(--ACT-color);
+                }
+
+                .main-group-RELATE {
+                    background-color: var(--RELATE-color);
+                }
+            }
+        }
+    }
+}
+
+/* DESKTOP */
+@media screen and (min-width: 768px) {
+    .review-info {
+        h2 {
+            font-size: 1.25rem;
+        }
+
+        .review-panel {
+            .review-text {
+                p {
+                    font-size: 1rem;
+                }
+            }
+
+            .vp-info {
+                font-size: .875rem;
+
+                .sim-group {
+                    span {
+                        padding: .25rem .375rem;
+                    }
+                }
+            }
+        }
+    }
+}
