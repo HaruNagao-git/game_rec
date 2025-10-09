@@ -56,6 +56,10 @@ $(function () {
         const vp = game_info['review_exp'][reviewId]['vp_list'][idx];
 
         const $panel = $(this).closest('.review-panel');
+        // .sim-group spanのクラスをリセットしてから追加
+        $panel.find('.sim-group span').removeClass(function (index, className) {
+            return (className.match(/(^|\s)main-group-\S+/g) || []).join(' ');
+        });
         $panel.find('.sim-group span').addClass(`main-group-${vp.main_group}`).text(vp.sim_group || '');
         $panel.find('.vp-name span').text(vp.viewpoint || '');
         $panel.find('.eval-sentence span').text(vp.eval_sentence || '');
