@@ -2,3 +2,12 @@
 instance/
 migrations/
 **/__pycache__/
+
+# logファイルを追跡対象外に設定
+logs/
+
+# プライバシーに関わるサーバー設定ファイルを追跡対象外に設定
+server_settings/
+# server_settings/nginx/conf.d/game_rec.conf
+# server_settings/nginx/nginx.conf
+# server_settings/gunicorn.py

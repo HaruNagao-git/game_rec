@@ -11,4 +11,9 @@ aside {
         text-align: justify;
         font-size: .875rem;
     }
+    .vp-cnt-line {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: .25rem;
+    }
 }

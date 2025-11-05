@@ -3,14 +3,14 @@
 // モーダルウィンドウの前後移動用変数
 let currentImageIndex = -1;
 // thumb_listの最初の画像index
-const firstImageIndex = video_list.length;
+const firstImageIndex = videoList.length;
 // screenshot部分の長さ
-const screenshotLength = thumb_list.length - firstImageIndex;
+const screenshotLength = thumbList.length - firstImageIndex;
 
 // モーダルを表示する関数
 function showModal(index) {
 	currentImageIndex = index - firstImageIndex;
-	const src = thumb_list[index]['1080p'];
+	const src = thumbList[index]['1080p'];
 
 	// モーダルの画像を更新
 	pageNum();
@@ -28,7 +28,7 @@ $('#prevButton').on('click', function () {
 	}
 
 	pageNum();
-	$('#modalImage').attr('src', thumb_list[currentImageIndex + firstImageIndex]['1080p']);
+	$('#modalImage').attr('src', thumbList[currentImageIndex + firstImageIndex]['1080p']);
 });
 $('#nextButton').on('click', function () {
 	if (currentImageIndex < screenshotLength - 1) {
@@ -38,7 +38,7 @@ $('#nextButton').on('click', function () {
 	}
 
 	pageNum();
-	$('#modalImage').attr('src', thumb_list[currentImageIndex + firstImageIndex]['1080p']);
+	$('#modalImage').attr('src', thumbList[currentImageIndex + firstImageIndex]['1080p']);
 });
 // 何枚目の画像かを表示
 function pageNum() {
@@ -50,7 +50,7 @@ $('.media-main .image img').on('click', function () {
 	const parent = $(this).closest('.image');
 	if (!parent.hasClass('.movie')) {
 		// クリックした画像のindexを取得
-		const index = firstImageIndex + screenshot1080p_list.indexOf($(this).attr('src'));
+		const index = firstImageIndex + screenshot1080pList.indexOf($(this).attr('src'));
 		if (index !== -1) {
 			showModal(index);
 		}

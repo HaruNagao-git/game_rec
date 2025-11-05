@@ -1,0 +1,84 @@
+{% extends 'game_base.html' %}
+
+{% block navbar %}
+<li><a href="{{url_for('game.search')}}">SEARCH</a></li>
+{% endblock %}
+
+{% block search_form %}
+<form action="{{url_for('game.search')}}" method="POST" novalidate>
+    {{form.hidden_tag()}}
+    <div class="search-form">
+        <!-- テキストボックスと検索ボタンは横並び -->
+        {{form.title(class="form-control", placeholder="タイトルを入力（例：FINAL FANTASY）")|safe}}
+        <!--{{form.submit(class="btn", value="検索")}}-->
+        <span>
+            <button class="name-search-btn" type="submit" aria-label="Search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+        </span>
+    </div>
+</form>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 class="help-title">システムの使いかた</h2>
+    <div class="wrapper">
+        <aside>
+            <nav class="help-nav">
+                <h3>目次</h3>
+                <ul>
+                    <li><a href="#ゲーム検索">ゲーム検索</a>
+                        <ul>
+                            <li><a href="#ゲームタイトルでの検索">ゲームタイトルでの検索</a></li>
+                            <li><a href="#観点での検索">観点での検索</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#検索結果の見方">検索結果の見方</a>
+                        <ul>
+                            <li><a href="#ゲーム一覧（左側）">ゲーム一覧（左側）</a></li>
+                            <li><a href="#詳細情報（右側）">詳細情報（右側）</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="help-main">
+            <h3 id="ゲーム検索">ゲーム検索</h3>
+            <p>ここでは，本システムを用いてゲーム検索を行う方法について説明します．本システムを使用するにあたって何かわからないことがあれば，このページを参照してください．</p>
+            <h4 id="ゲームタイトルでの検索">ゲームタイトルでの検索</h4>
+            <p>ゲームタイトルでの検索は，検索ボックスにタイトルを入力し，虫眼鏡ボタンをクリック，もしくはEnterキーを押すだけで簡単に行えます．取得するゲームは検索ボックスに入力したタイトルに基づいて絞り込まれます．
+            </p>
+            <figure>
+                <img src="{{url_for('static', filename='imgs/help_search-title.gif')}}" style="width: 60%;" alt="">
+                <figcaption>ゲームタイトルでの検索</figcaption>
+            </figure>
+            <h4 id="観点での検索">観点での検索</h4>
+            <p>観点での検索では，経験価値に基づく観点がチェックボックスとして表示されており，それらを選択することで絞り込み条件を指定することができます．</p>
+            <figure>
+                <img src="{{url_for('static', filename='imgs/help_search-viewpoint.gif')}}" style="width: 60%;" alt="">
+                <figcaption>観点での検索</figcaption>
+            </figure>
+            <h3 id="検索結果の見方">検索結果の見方</h3>
+            <p>検索結果は，左側にゲームの一覧，右側に選択したゲームの詳細情報が表示されます．</p>
+            <figure>
+                <img src="{{url_for('static', filename='imgs/help_result-all.gif')}}" style="width: 80%;" alt="">
+                <figcaption>検索結果の全体像</figcaption>
+            </figure>
+            <h4 id="ゲーム一覧（左側）">ゲーム一覧（左側）</h4>
+            <p>左側のゲーム一覧には，検索条件に一致したゲームが表示されます．各パネルには各ゲームタイトルとヘッダー画像，観点で検索された際には一致する観点が表示されます．ゲームをクリックすると，右側にそのゲームの詳細情報が表示されます．
+            </p>
+            <figure>
+                <img src="{{url_for('static', filename='imgs/help_result-list.gif')}}" style="width: 60%;" alt="">
+                <figcaption>検索されたゲーム一覧</figcaption>
+            </figure>
+            <h4 id="詳細情報（右側）">詳細情報（右側）</h4>
+            <p>右側の詳細情報には，選択したゲームの動画とスクリーンショット，ゲームについての説明，一致した観点のユーザレビューなどが表示されます．スクリーンショットはクリックすると拡大表示されます．また，ユーザレビュー内のリンク（青字の部分）をクリックすると，レビューパネル上側の領域に観点タイプなどの情報が表示されます．
+            </p>
+            <figure>
+                <img src="{{url_for('static', filename='imgs/help_game-details.gif')}}" style="width: 80%;" alt="">
+                <figcaption>選択したゲームの詳細情報</figcaption>
+            </figure>
+        </main>
+    </div>
+</div>
+{% endblock %}

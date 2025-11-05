@@ -1,0 +1,46 @@
+/* COMMON WRAPPER */
+/* DESKTOP */
+@media screen and (min-width: 768px) {
+    .wrapper,
+    .wrapper-index,
+    .wrapper-result {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+    }
+    .wrapper {
+        main {
+            width: 70%;
+            order: 1;
+        }
+        aside {
+            width: 28%;
+            order: 2;
+        }
+    }
+    .wrapper-index {
+        .index-panel,
+        #game-detail-article {
+            overflow-y: scroll;
+            height: 80vh;
+        }
+        .index-panel {
+            width: 25%;
+            order: 1;
+        }
+        #game-detail-article {
+            width: 72%;
+            order: 2;
+        }
+    }
+    .wrapper-result {
+        main {
+            width: 64%;
+            order: 1;
+        }
+        aside {
+            width: 34%;
+            order: 2;
+        }
+    }
+}

@@ -2,7 +2,10 @@
 
 // review-infoのレビュー内でevaluationに一致する部分をリンク化する
 $(function () {
-    const reviewExp = game_info['review_exp'];
+    const reviewExp = gameInfo["review_exp"] || {};
+    if (Object.keys(reviewExp).length === 0) {
+        return;
+    }
     $('.review-panel').each(function () {
         const $panel = $(this);
         const reviewId = $panel.data('review-id');
@@ -53,7 +56,7 @@ $(function () {
         e.preventDefault();
         const idx = $(this).data('idx');
         const reviewId = $(this).data('review-id');
-        const vp = game_info['review_exp'][reviewId]['vp_list'][idx];
+        const vp = gameInfo['review_exp'][reviewId]['vp_list'][idx];
 
         const $panel = $(this).closest('.review-panel');
         // .sim-group spanのクラスをリセットしてから追加

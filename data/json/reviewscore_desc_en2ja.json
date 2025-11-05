@@ -1,0 +1,38 @@
+{
+    "Overwhelmingly Positive": {
+        "ja": "圧倒的に好評",
+        "score": 9
+    },
+    "Very Positive": {
+        "ja": "非常に好評",
+        "score": 8
+    },
+    "Positive": {
+        "ja": "好評",
+        "score": 7
+    },
+    "Mostly Positive": {
+        "ja": "やや好評",
+        "score": 6
+    },
+    "Mixed": {
+        "ja": "賛否両論",
+        "score": 5
+    },
+    "Mostly Negative": {
+        "ja": "やや不評",
+        "score": 4
+    },
+    "Negative": {
+        "ja": "不評",
+        "score": 3
+    },
+    "Very Negative": {
+        "ja": "非常に不評",
+        "score": 2
+    },
+    "Overwhelmingly Negative": {
+        "ja": "圧倒的に不評",
+        "score": 1
+    }
+}

@@ -1,6 +1,9 @@
 'use strict';
 
 $(function () {
+    if (Object.keys(gameInfo['videos'] || {}).length === 0) {
+        return;
+    }
     const $backwardBtn = $('#backwardBtn');
     const $forwardBtn = $('#forwardBtn');
     const $timeBar = $('#timeBar');

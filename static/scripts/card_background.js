@@ -4,10 +4,10 @@
 $(document).ready(function () {
     function updateDisplay() {
         var isWideScreen = $(window).width() >= 768;
-        var img_path = isWideScreen ? desktopImgPath : mobileImgPath;
+        var imgPath = isWideScreen ? desktopImgPath : mobileImgPath;
 
         // 背景画像の更新
-        $('.background-img').attr('src', img_path);
+        $('.background-img').attr('src', imgPath);
     };
 
     // 初回実行

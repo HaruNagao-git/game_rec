@@ -4,8 +4,13 @@ $(function () {
     const $settingsBtn = $('#settingsBtn');
     const $qualityMenu = $('#qualityMenu');
 
-    const videoData = game_info.videos;
+    const videoData = gameInfo['videos'] || {};
 
+    if (Object.keys(videoData).length === 0) {
+        // 動画データがない場合は設定メニューを非表示にする
+        $settingsBtn.hide();
+        return;
+    }
     // 歯車メニューで画質メニュー表示
     $settingsBtn.on('click', function (e) {
         e.stopPropagation();

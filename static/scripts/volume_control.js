@@ -1,6 +1,9 @@
 'use strict';
 
 $(function () {
+    if (Object.keys(gameInfo['videos'] || {}).length === 0) {
+        return;
+    }
     const $volumeBar = $('#volumeBar');
     const $volumeIcon = $('#volumeIcon');
     const $volumeIconSymbol = $('#volumeIconSymbol');
@@ -16,6 +19,13 @@ $(function () {
 
     // ボリュームアイコンのフォントサイズを設定
     $volumeIconSymbol.find('i').css('font-size', '1rem');
+
+    // ページ読み込み時に音量を設定
+    $video[0].volume = 0;
+    $volumeBar.val($video[0].volume);
+    updateVolumeIcon($video[0].volume);
+    const percent = $video[0].volume * 100; // 0〜100
+    $volumeBar.css('--vol-progress', percent + '%');
 
     // 音量変更時アイコン切替
     $volumeBar.on('input', function () {

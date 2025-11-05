@@ -4,11 +4,16 @@ p {
     line-height: 1.6;
     font-size: 1rem;
     color: var(--gray-3);
+
 }
-img,video {
+img,
+video {
     width: 100%;
 }
-h1,h2,h3 {
+h1,
+h2,
+h3,
+h4 {
     color: var(--gray-3);
 }
 h1 {
@@ -21,9 +26,11 @@ h2 {
 h3 {
     font-size: 1rem;
 }
+h4 {
+    font-size: .875rem;
+}
 .container {
-    max-width: var(--max-width);
-    width: 100%;
+    max-width: 90%;
     margin: 0 auto;
     padding: 0 1rem;
     .game-title {
@@ -45,6 +52,41 @@ h3 {
         color: var(--white);
     }
 }
+/* MATCHED VIEWPOINTS */
+
+.matched-vp-area {
+    .vp-label {
+        font-size: .5rem;
+        color: var(--gray-4);
+        padding-top: .125rem;
+        margin-right: .125rem;
+    }
+    .ul-vp {
+        gap: .25rem;
+        padding-left: 0;
+        li {
+            color: var(--gray-5);
+            border-radius: 8px;
+            font-size: .5rem;
+            padding: .125rem .25rem;
+        }
+        .li-vp-SENSE {
+            background-color: var(--SENSE-color);
+        }
+        .li-vp-FEEL {
+            background-color: var(--FEEL-color);
+        }
+        .li-vp-THINK {
+            background-color: var(--THINK-color);
+        }
+        .li-vp-ACT {
+            background-color: var(--ACT-color);
+        }
+        .li-vp-RELATE {
+            background-color: var(--RELATE-color);
+        }
+    }
+}
 /* DESKTOP */
 @media screen and (min-width: 768px) {
     h2 {
@@ -54,17 +96,34 @@ h3 {
     h3 {
         font-size: 1.25rem;
     }
+    h4 {
+        font-size: 1rem;
+    }
     .wrapper {
         display: flex;
         justify-content: space-between;
         margin-bottom: 2rem;
         main {
-            width: 62%;
+            width: 70%;
             order: 1;
         }
         aside {
-            width: 35%;
+            width: 28%;
             order: 2;
+        }
+    }
+    .matched-vp-area {
+        bottom: .125rem;
+        .vp-label {
+            font-size: .675rem;
+            padding-top: .25rem;
+            margin-right: .25rem;
+        }
+        .ul-vp {
+            li {
+                font-size: .675rem;
+                padding: .25rem .375rem;
+            }
         }
     }
 }

@@ -1,8 +1,10 @@
 @use './bases/variables';
 @use './bases/base';
 @use './bases/common';
+@use './bases/wrapper';
 @use './pages/header';
 @use './pages/card';
+@use './pages/help';
 @use './pages/form';
 @use './pages/search-index';
 @use './pages/media-panel';

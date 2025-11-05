@@ -24,19 +24,34 @@ def json2table():
 
             # jsonデータをINSERTする
             if info_name == "base":
+                with open("data/json/review_info.json", "r", encoding="utf-8") as f_review:
+                    review_data = json.load(f_review)
+                with open("data/json/review_desc.json", "r", encoding="utf-8") as f_review_desc:
+                    review_desc_en2ja = json.load(f_review_desc)
                 all_sql = (
-                    insert_sql + "(appid, name, publisher, short_description, about_the_game) VALUES (?, ?, ?, ?, ?)"
+                    insert_sql
+                    + "(appid, name, publisher, short_description, about_the_game, review_desc_id, review_desc, review_score) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
                 )
                 for title, obj in data.items():
-                    rows.append(
-                        [
-                            obj["appid"],
-                            title,
-                            json.dumps(obj["publisher"], ensure_ascii=False),
-                            obj["short_description"],
-                            obj["about_the_game"],
-                        ]
-                    )
+                    appid = obj["appid"]
+                    query_summary = review_data[str(appid)]["query_summary"] if str(appid) in review_data else None
+                    if query_summary:
+                        review_desc_en = review_desc_en2ja[query_summary["review_score_desc"]]  # レビュー評価（英語）
+                        review_desc_id = review_desc_en2ja[review_desc_en]["score"]  # レビュー評価ID
+                        review_desc_ja = review_desc_en2ja[review_desc_en]["ja"]  # レビュー評価（日本語）
+                        review_score = query_summary["review_score"]  # レビュースコア
+                        rows.append(
+                            [
+                                appid,
+                                title,
+                                json.dumps(obj["publisher"], ensure_ascii=False),
+                                obj["short_description"],
+                                obj["about_the_game"],
+                                review_desc_id,
+                                review_desc_ja,
+                                review_score,
+                            ]
+                        )
             elif info_name == "image":
                 all_sql = (
                     insert_sql

@@ -1,72 +1,83 @@
 {% extends 'game_base.html' %}
 
 {% block navbar %}
+<li><a href="{{url_for('game.help')}}">HELP</a></li>
 <li><a href="{{url_for('game.search')}}">SEARCH</a></li>
 {% endblock %}
 
 {% block content %}
-<h2 class="game-title">ゲーム一覧</h2>
-{% if games==[] %}
-<p>合致するゲームがありません</p>
-{% else %}
-<ul class="index-panel">
-    {% for game in games %}
-    <a href="{{url_for('game.result', appid=game.appid, query=game.query, page=request.args.get('page', 1))}}"
-        class="index-panel-item">
-        <img src="{{game.header}}" alt="header_image" class="game-header">
-        <div class="text-area">
-            <h3 class="text-area-name" data-name="{{game.name}}">
-                <!-- {{game.name}}の長さによる条件分岐をJSで処理 -->
-            </h3>
-            <p class="text-area-desc" data-desc="{{game.short_description}}">
-                <!-- {{game.short_description}}の長さによる条件分岐をJSで処理 -->
-            </p>
-            <div class="matched-viewpoints">
-                {% if game.matched_viewpoints %}
-                <span>一致する観点: </span>
-                <ul class="matched-viewpoints-area">
-                    {% for vp in game.matched_viewpoints %}
-                    <li class="viewpoint-{{vp.main_group}}">{{ vp.viewpoint }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </div>
-        </div>
-    </a>
-    {% endfor %}
-</ul>
-{% if total_pages > 1 %}
-<nav class="pagination">
-    <a href="{{ url_for('game.index', query=query, page=page-1) if page > 1 else '#' }}"
-        class="pagination__arrow pagination__prev {% if page == 1 %}disabled{% endif %}">
-        <span class="visuallyhidden">Previous Page</span>
-    </a>
-    <ul class="pagination__items">
-        {% for p in range(1, total_pages+1) %}
-        <li class="{% if p == page %}is-active{% endif %}">
-            <a href="{{ url_for('game.index', query=query, page=p) }}"></a>
-        </li>
-        {% endfor %}
-    </ul>
-    <a href="{{ url_for('game.index', query=query, page=page+1) if page < total_pages else '#' }}"
-        class="pagination__arrow pagination__next {% if page == total_pages %}disabled{% endif %}">
-        <span class="visuallyhidden">Next Page</span>
-    </a>
-</nav>
-{% endif %}
-{% endif %}
+<div class="container-index">
+    <h2 class="index-title">ゲーム一覧</h2>
+    {% if game_list==[] %}
+    <p>合致するゲームがありません</p>
+    {% else %}
+    <div class="wrapper-index">
+        <ul class="index-panel">
+            {% for game in game_list %}
+            <a href="{{url_for('game.index', query=query, index=loop.index, page=page)}}" class="index-panel-item">
+                <img src="{{game.header}}" alt="header_image" class="game-header}}">
+                <div class="text-area">
+                    <h3 class="text-area-name" data-name="{{game.name}}">
+                        <!-- {{game.name}}の長さによる条件分岐をJSで処理 -->
+                    </h3>
+                    <div class="matched-vp-area">
+                        {% if game.matched_viewpoints %}
+                        <span class="vp-label">一致する観点: </span>
+                        <ul id="controlledUL" class="ul-vp">
+                            {% for vp in game.matched_viewpoints %}
+                            <li class="li-vp-{{vp.main_group}}">{{ vp.viewpoint }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </ul>
+        <article id="game-detail-article">
+            {% from 'components/game_result.html' import game_result %}
+            {{ game_result(game_list[index-1]) }}
+        </article>
+    </div>
+    {% if total_pages > 1 %}
+    <nav class="pagination">
+        <a href="{{ url_for('game.index', query=query, index=1, page=page-1) if page > 1 else '#' }}"
+            class="pagination__arrow pagination__prev {% if page == 1 %}disabled{% endif %}">
+            <span class="visuallyhidden">Previous Page</span>
+        </a>
+        <ul class="pagination__items">
+            {% for p in range(1, total_pages+1) %}
+            <li class="{% if p == page %}is-active{% endif %}">
+                <a href="{{ url_for('game.index', query=query, index=1, page=p) }}"></a>
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('game.index', query=query, index=1, page=page+1) if page < total_pages else '#' }}"
+            class="pagination__arrow pagination__next {% if page == total_pages %}disabled{% endif %}">
+            <span class="visuallyhidden">Next Page</span>
+        </a>
+    </nav>
+    {% endif %}
+    {% endif %}
+</div>
 <!--Flashメッセージ-->
 {% from 'components/flash.html' import flash %}
 {{ flash(get_flashed_messages()) }}
 {% endblock %}
 {% block script %}
 <script>
-    'use strict';
-    const game_list = {{ games | tojson | safe }};
-    if (game_list.length === 0) {
-        const $page_footer = $('.page-footer');
-        $page_footer.css({ 'position': 'absolute', 'bottom': '0' });
-    }
+    const index = {{ index }}-1;
+    const gameList = {{ game_list | tojson | safe }};
+    const gameInfo = gameList[index];
 </script>
+<script src="{{url_for('static',filename='scripts/variables.js')}}"></script>
 <script src="{{url_for('static', filename='scripts/index_panel.js')}}"></script>
+<script src="{{url_for('static',filename='scripts/media.js')}}"></script>
+<script src="{{url_for('static',filename='scripts/modal_window.js')}}"></script>
+<script src="{{url_for('static',filename='scripts/base.js')}}"></script>
+<script src="{{url_for('static',filename='scripts/definition_setting.js')}}"></script>
+<script src="{{url_for('static',filename='scripts/time_control.js')}}"></script>
+<script src="{{url_for('static',filename='scripts/fullscreen.js')}}"></script>
+<script src="{{url_for('static',filename='scripts/volume_control.js')}}"></script>
+<script src="{{url_for('static',filename='scripts/link_review.js')}}"></script>
 {% endblock %}

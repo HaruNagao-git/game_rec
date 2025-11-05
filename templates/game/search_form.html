@@ -1,4 +1,9 @@
 {% extends 'game_base.html' %}
+
+{% block navbar %}
+<li><a href="{{url_for('game.help')}}">HELP</a></li>
+{% endblock %}
+
 {% block search_form %}
 <form action="{{url_for('game.search')}}" method="POST" novalidate>
     {{form.hidden_tag()}}
@@ -15,31 +20,36 @@
 </form>
 {% endblock %}
 {% block content %}
-<h2 class="game-title">ゲーム検索</h2>
-<form class="wrapper" action="{{url_for('game.search')}}" method="POST" novalidate>
-    <aside>
-        <div class="viewpoint-area">
-            <h3>選択した観点</h3>
-            <ul class="viewpoint-area-choosed"></ul>
-            {{form.submit(class="btn", value="観点で検索")}}
-        </div>
-        {% if form.title.errors %}
-        <ul class="text-danger">
-            {% for error in form.title.errors %}
-            <li>{{error}}</li>
+<div class="container">
+    <h2 class="game-title">ゲーム検索</h2>
+    <form class="wrapper" action="{{url_for('game.search')}}" method="POST" novalidate>
+        <aside>
+            <div class="viewpoint-area">
+                <h3>選択した観点</h3>
+                <ul class="viewpoint-area-choosed"></ul>
+                {{form.submit(class="btn", value="観点で検索")}}
+            </div>
+            {% if form.title.errors %}
+            <ul class="text-danger">
+                {% for error in form.title.errors %}
+                <li>{{error}}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </aside>
+        <main class="form-main">
+            {{ form.hidden_tag() }}
+            {% from 'components/checkbox_form.html' import render_checkbox_form %}
+            {% for main_group in viewpoint_choices.keys() %}
+            <div class="selection-area">
+                {{ render_checkbox_form(form, viewpoint_choices, main_group) }}
+            </div>
             {% endfor %}
-        </ul>
-        {% endif %}
-    </aside>
-    <main>
-        {{ form.hidden_tag() }}
-        {% from 'components/checkbox_form.html' import render_checkbox_form %}
-        {% for main_group in viewpoint_choices.keys() %}
-        {{ render_checkbox_form(form, viewpoint_choices, main_group) }}
-        {% endfor %}
-    </main>
-</form>
+        </main>
+    </form>
+</div>
 {% endblock %}
 {% block script %}
 <script src="{{url_for('static', filename='scripts/viewpoint-area.js')}}"></script>
+<script src="{{url_for('static', filename='scripts/accordion.js')}}"></script>
 {% endblock %}

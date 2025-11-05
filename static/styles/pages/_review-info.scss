@@ -21,21 +21,29 @@
         padding: 1rem 1rem .5rem;
         margin-bottom: 1rem;
 
-        .review-text {
-            text-align: justify;
-            height: 30vh;
-            overflow-y: scroll;
-            margin-bottom: 1rem;
-            padding: 1rem .5rem;
-            background-color: var(--gray-e);
-            border-radius: 4px;
+        .review-area {
+            strong {
+                margin-bottom: .5rem;
+                font-size: .75rem;
+            }
 
-            p {
-                font-size: .875rem;
+            .review-text {
+                text-align: justify;
+                height: 30vh;
+                overflow-y: scroll;
+                margin-bottom: 1rem;
+                padding: 1rem .5rem;
+                background-color: var(--gray-e);
+                border: 2px solid var(--gray-d);
+                border-radius: 4px;
+
+                p {
+                    font-size: .875rem;
+                }
             }
         }
 
-        .vp-info {
+        .vp-area {
             font-size: .75rem;
 
             .sim-group,
@@ -83,13 +91,21 @@
         }
 
         .review-panel {
-            .review-text {
-                p {
-                    font-size: 1rem;
+            .review-area {
+                strong {
+                    font-size: .875rem;
+                }
+
+                .review-text {
+                    height: 40vh;
+
+                    p {
+                        font-size: 1rem;
+                    }
                 }
             }
 
-            .vp-info {
+            .vp-area {
                 font-size: .875rem;
 
                 .sim-group {
