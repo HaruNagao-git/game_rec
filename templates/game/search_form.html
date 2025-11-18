@@ -23,7 +23,7 @@
 <div class="container">
     <h2 class="game-title">ゲーム検索</h2>
     <form class="wrapper" action="{{url_for('game.search')}}" method="POST" novalidate>
-        <aside>
+        <aside class="aside-form">
             <div class="viewpoint-area">
                 <h3>選択した観点</h3>
                 <ul class="viewpoint-area-choosed"></ul>
@@ -36,6 +36,14 @@
                 {% endfor %}
             </ul>
             {% endif %}
+            <div class="vp-desc-area">
+                <div class="vp-desc-header">
+                    <strong>観点の説明: </strong><span id="vpDescIcon"></span>
+                </div>
+                <div class="vp-desc-content">
+                    <p class="vp-desc-text">観点を選択すると、ここに説明が表示されます。</p>
+                </div>
+            </div>
         </aside>
         <main class="form-main">
             {{ form.hidden_tag() }}
@@ -50,6 +58,7 @@
 </div>
 {% endblock %}
 {% block script %}
+<script src="{{url_for('static', filename='scripts/vp2Desc.js')}}"></script>
 <script src="{{url_for('static', filename='scripts/viewpoint-area.js')}}"></script>
 <script src="{{url_for('static', filename='scripts/accordion.js')}}"></script>
 {% endblock %}

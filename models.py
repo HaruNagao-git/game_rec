@@ -41,11 +41,9 @@ class Base(db.Model):
     # ゲームの詳細情報
     about_the_game = db.Column(db.Text)
     # ユーザレビューの評価ID
-    # review_desc_id = db.Column(db.Integer)
+    review_desc_id = db.Column(db.Integer)
     # ユーザレビューの評価
-    # review_desc = db.Column(db.String(10))
-    # レビュースコア
-    # review_score = db.Column(db.Integer)
+    review_desc = db.Column(db.String(10))
 
 
 # 画像情報

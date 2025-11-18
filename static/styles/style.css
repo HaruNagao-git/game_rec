@@ -184,11 +184,11 @@ h4 {
     margin-bottom: 2rem;
   }
   .wrapper main {
-    width: 70%;
+    width: 66%;
     order: 1;
   }
   .wrapper aside {
-    width: 28%;
+    width: 32%;
     order: 2;
   }
   .wrapper-index .index-panel,
@@ -589,8 +589,7 @@ header a:hover {
   display: none;
 }
 .details .checkbox-area {
-  display: flex;
-  flex-wrap: wrap;
+  display: block;
   overflow-y: scroll;
   padding: 1rem;
   outline: 1px solid var(--gray-c);
@@ -603,7 +602,12 @@ header a:hover {
   cursor: pointer;
   /* デフォルトのチェックボックスを非表示 */
 }
+.details .checkbox-area label :hover {
+  border: #f3eee6 1px solid;
+  background-color: #fdfbf7;
+}
 .details .checkbox-area label span {
+  padding: 0.5rem;
   font-size: 0.75rem;
 }
 .details .checkbox-area label input[type=checkbox] {
@@ -633,12 +637,15 @@ header a:hover {
   content: "\f00c";
 }
 
-.viewpoint-area {
+.aside-form {
   position: -webkit-sticky;
   position: sticky;
   top: 4rem;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
-.viewpoint-area-choosed {
+.aside-form .viewpoint-area-choosed {
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -650,14 +657,14 @@ header a:hover {
   height: 20vh;
   overflow-y: scroll;
 }
-.viewpoint-area-choosed li {
+.aside-form .viewpoint-area-choosed li {
   color: var(--gray-3);
   font-size: 1rem;
   list-style: disc;
   margin-right: 2rem;
   margin-bottom: 0.5rem;
 }
-.viewpoint-area input[type=submit] {
+.aside-form .viewpoint-area input[type=submit] {
   display: inline-block;
   padding: 0.5rem 1rem;
   background: var(--gray-e);
@@ -670,12 +677,27 @@ header a:hover {
   top: -4px;
   transition: 0s;
 }
-.viewpoint-area input[type=submit]:hover {
+.aside-form .viewpoint-area input[type=submit]:hover {
   background: var(--gray-d);
 }
-.viewpoint-area input[type=submit]:active {
+.aside-form .viewpoint-area input[type=submit]:active {
   top: 0;
   box-shadow: 0 2px var(--gray-b);
+}
+.aside-form .vp-desc-area {
+  margin-top: 0.5rem;
+}
+.aside-form .vp-desc-area .vp-desc-content {
+  background-color: var(--gray-e);
+  border: 1px solid var(--gray-c);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin: 0.5rem 0;
+  height: 40vh;
+  overflow-y: scroll;
+}
+.aside-form .vp-desc-area .vp-desc-content .vp-desc-text {
+  font-size: 0.875rem;
 }
 
 .form-control:focus {

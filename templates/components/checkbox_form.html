@@ -1,8 +1,18 @@
 {% macro render_checkbox_form(form, viewpoint_choices, main_group) %}
 {% if form %}
-<h3>{{ main_group }}</h3>
+{% if main_group=="SENSE" %}
+<h3>SENSE（五感，特に視覚・聴覚に関する価値）</h3>
+{% elif main_group=="FEEL" %}
+<h3>FEEL（感情に関する価値）</h3>
+{% elif main_group=="THINK" %}
+<h3>THINK（創造・知的好奇心に関する価値）</h3>
+{% elif main_group=="ACT" %}
+<h3>ACT（身体的な行動に関する価値）</h3>
+{% elif main_group=="RELATE" %}
+<h3>RELATE（他者との関係に関する価値）</h3>
+{% endif %}
 {% for subgroup, choices in viewpoint_choices[main_group].items() %}
-<details class="details {{main_group}} js-details">
+<details class="details {{main_group}} js-details" data-id="{{main_group}}_{{loop.index}}" data-label="{{subgroup}}">
     <summary class="details-summary {{main_group}} js-details-summary"><span class="acc-btn"></span>{{ subgroup }}
     </summary>
     <div class="checkbox-area js-details-content">
