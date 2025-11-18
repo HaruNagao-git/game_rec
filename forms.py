@@ -53,7 +53,7 @@ class SignUpForm(LoginForm):
 
 # JSONファイルから選択した経験価値の観点を読み込む関数
 def load_viewpoint_choices():
-    json_path = "/data/nagao/game_rec/data/json/viewpoint_qwen3.json"
+    json_path = "data/json/viewpoint_qwen3.json"
     with open(json_path, "r", encoding="utf-8") as f:
         data = json.load(f)
     group_choices = {}
