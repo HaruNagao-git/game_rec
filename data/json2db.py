@@ -24,7 +24,7 @@ def json2table():
 
             # jsonデータをINSERTする
             if info_name == "base":
-                with open("data/json/review_info_tr10.json", "r", encoding="utf-8") as f_review:
+                with open("data/json/review_info.json", "r", encoding="utf-8") as f_review:
                     review_data = json.load(f_review)
                 with open("data/json/reviewscore_desc_en2ja.json", "r", encoding="utf-8") as f_review_desc:
                     reviewscore_desc_en2ja = json.load(f_review_desc)
@@ -76,10 +76,10 @@ def json2table():
                             [int(appid), video["name"], video["thumbnail"], video["video_480p"], video["video_max"]]
                         )
             elif info_name == "review":
-                all_sql = insert_sql + "(review_id, review_text) VALUES (?, ?)"
+                all_sql = insert_sql + "(review_id, review_text,review_score) VALUES (?, ?, ?)"
                 for _, review_obj in data.items():
                     for review in review_obj["reviews"]:
-                        rows.append([review["id"], review["text"]])
+                        rows.append([review["id"], review["text"], review["weighted_vote_score"]])
 
             cur.executemany(all_sql, rows)
 

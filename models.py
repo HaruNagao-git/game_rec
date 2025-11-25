@@ -92,6 +92,8 @@ class Review(db.Model):
     review_id = db.Column(db.String(20))
     # レビュー全文(Text)
     review_text = db.Column(db.Text)
+    # レビュースコア(Float)
+    review_score = db.Column(db.Float)
 
 
 # 観点情報

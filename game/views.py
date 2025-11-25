@@ -4,7 +4,7 @@ from forms import generate_game_form, load_viewpoint_choices
 import json
 from math import ceil
 from models import Base, Image, Video, Review, Viewpoint, BaseViewpoint, db
-from sqlalchemy import func, desc
+from sqlalchemy import func, desc, distinct
 
 # gameのBlueprintを作成
 game_bp = Blueprint("game", __name__, url_prefix="/game")
@@ -88,19 +88,26 @@ def index(query, index):
     # viewpointsが空でない場合、選択した観点が存在するゲーム情報を中間テーブルbase_viewpointsから取得
     if viewpoints:
         # BaseViewpointからappidごとに一致数をカウントし、多い順に並べる
+        # 選んだ観点を重複排除でカウント
+        # 持っている観点数がvp_lenの半分以下のゲームは除外
         base_viewpoints = (
-            db.session.query(Base, func.count(BaseViewpoint.vp_id))
+            db.session.query(
+                Base,
+                func.count(distinct(BaseViewpoint.vp_id)).label("vp_count"),
+                func.sum(Review.review_score).label("total_score"),
+            )
             .join(BaseViewpoint, Base.appid == BaseViewpoint.appid)
+            .join(Review, BaseViewpoint.review_id == Review.review_id)
             .filter(BaseViewpoint.vp_id.in_(viewpoints))
             .group_by(Base.appid)
-            .order_by(desc(func.count(BaseViewpoint.vp_id)))
-            .limit(30)  # 上位30件まで取得
+            .order_by(desc("vp_count"), desc("total_score"))
+            .limit(30)
         )
 
         # ページネーション
         base_viewpoints, total_pages = paginate_list(base_viewpoints, page, per_page)
 
-        for base, vp_count in base_viewpoints.all():
+        for base, vp_count, total_score in base_viewpoints.all():
             # Imageテーブルからの情報を取得
             images = fetch_image_info(base)
             # 一致する観点情報を取得

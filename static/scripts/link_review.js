@@ -65,6 +65,6 @@ $(function () {
         });
         $panel.find('.sim-group span').addClass(`main-group-${vp.main_group}`).text(vp.sim_group || '');
         $panel.find('.vp-name span').text(vp.viewpoint || '');
-        $panel.find('.eval-sentence span').text(vp.eval_sentence || '');
+        $panel.find('.review-area span').text(vp.eval_sentence || '');
     });
 });
