@@ -1,13 +1,16 @@
 # データベースに関するファイル群を追跡対象外に設定
 instance/
 migrations/
+
+# Pythonのキャッシュフォルダを追跡対象外に設定
 **/__pycache__/
 
 # logファイルを追跡対象外に設定
 logs/
 
 # プライバシーに関わるサーバー設定ファイルを追跡対象外に設定
-server_settings/
+server_settings/*
+!server_settings/gunicorn_template.py
 
 # fontawesomeを追跡対象外に設定（サイズが大きすぎるため）
 static/styles/fontawesome/
