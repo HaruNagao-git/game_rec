@@ -107,6 +107,7 @@ def index(query, index):
         # ページネーション
         base_viewpoints, total_pages = paginate_list(base_viewpoints, page, per_page)
 
+        # vp_count, total_scoreはアンパックのために取得
         for base, vp_count, total_score in base_viewpoints.all():
             # Imageテーブルからの情報を取得
             images = fetch_image_info(base)
@@ -224,7 +225,9 @@ def fetch_video_info(base):
     }
 
 
+# 一致する観点に関連するレビュー情報を取得
 def fetch_review_info(base, matched_viewpoints):
+    # baseに関連するBaseViewpointオブジェクトを取得
     base_review_vps = (
         BaseViewpoint.query.join(Viewpoint, BaseViewpoint.vp_id == Viewpoint.vp_id)
         .join(Review, BaseViewpoint.review_id == Review.review_id)
@@ -233,6 +236,7 @@ def fetch_review_info(base, matched_viewpoints):
     )
     review_exp = {}
     for brv in base_review_vps:
+        # 一致する観点の場合、レビュー情報を追加
         if any(mv["viewpoint"] == brv.viewpoint.sim_group for mv in matched_viewpoints):
             if brv.review_id not in review_exp:
                 review_exp[brv.review_id] = {"text": brv.review.review_text, "vp_list": []}
