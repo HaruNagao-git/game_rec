@@ -6,14 +6,20 @@ jsonフォルダ内の各jsonファイルをデータベースに格納する方
 data/
 ├── json2db.py # jsonファイルからデータベースを構築
 ├── README.md # このファイル
-└── json/ # ゲームデータ群
+├── json/ # 規模に依存しないデータ群
+│   ├── review_exp.json
+│   ├── reviewscore_desc_en2ja.json
+│   └── viewpoint_qwen3.json
+├── json_lite/ # ゲームデータ群（軽量サイズ）
+│   ├── base_info.json
+│   ├── image_info.json
+│   ├── review_info.json
+│   └── video_info.json
+└── json_std/ # ゲームデータ群（標準サイズ）
     ├── base_info.json
     ├── image_info.json
-    ├── review_exp.json
     ├── review_info.json
-    ├── reviewscore_desc_en2ja.json
-    ├── video_info.json
-    └── viewpoint_qwen3.json
+    └── video_info.json
 ```
 
 ## 構築方法
