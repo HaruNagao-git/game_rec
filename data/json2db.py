@@ -1,3 +1,5 @@
+import argparse
+import sys
 import sqlite3
 import json
 import os
@@ -185,4 +187,12 @@ def json2table(size="std"):
 
 
 if __name__ == "__main__":
-    json2table(size="lite")
+    ## コマンドライン引数の設定
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--size", type=str, default="std")
+    args = parser.parse_args(sys.argv[1:])
+
+    ## コマンドライン引数の後処理
+    size = args.size
+
+    json2table(size=size)

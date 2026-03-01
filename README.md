@@ -28,23 +28,40 @@ game_rec/
 ### 研究室の計算機にクローンした場合
 仮想環境は構築しなくて大丈夫です．
 
-### 手元のanacondaを使用しているPCにクローンした場合
-クローンしたプロジェクトフォルダまで移動後，```conda create```コマンドで仮想環境を作成しアクティブ状態にします．以下のコマンドを実行します．
+### 手元のpip環境のPCにクローンした場合
+クローンしたディレクトリまで移動後，以下のコマンドで仮想環境を作成します．
 
-2. ```cd game_rec```
-3. ```conda create -n game_rec python==3.12.8```
-4. ```conda activate game_rec```
+2. `python -m venv <仮想環境名>`
 
-```requirements_conda.txt```からアプリケーションを動かすのに必要なパッケージをインストールします．以下のコマンドを実行します(※少々時間がかかります)．
+次に以下のコマンドで仮想環境を有効化します．
 
-5. ```conda install --file requirements_conda.txt```
+3.
+- **Linux/macOS:** `source <仮想環境名>/bin/activate`
+- **Windows:** `<仮想環境名>\Scripts\activate`
+
+`requirements.txt`からアプリケーションを動かすのに必要なパッケージのインストールを行います．以下のコマンドを実行します．
+
+4. `pip install -r requirements.txt`
+
+### 手元のconda環境のPCにクローンした場合
+クローンしたディレクトリまで移動後，```conda create```コマンドで仮想環境を作成しアクティブ状態にします．その後，以下のコマンドを実行します．
+
+2. ```conda create -n <仮想環境名> python==3.12.8```
+3. ```conda activate <仮想環境名>```
+
+`requirements_conda.txt`からアプリケーションを動かすのに必要なパッケージをインストールします．以下のコマンドを実行します(※少々時間がかかります)．
+
+4. ```conda install --file requirements_conda.txt```
+
+### データベース構築
+アプリケーションに必要なデータベースの構築を行います．方法は[README.md](./data/README.md)を参照してください．
 
 ### アプリを起動
-```app.py```を実行し，以下の出力の```Running on ...```以下URLにアクセスするとログイン画面が表示されます．（お手元のPCにクローンした方はgame_rec環境をアクティベートしてください．）
+```app.py```を実行し，以下の出力の```Running on ...```以下URLにアクセスするとログイン画面が表示されます．（お手元のPCにクローンした方は，作成した仮想環境を有効化してください．）
 
 6. 
-```bash
-user@computer:/game_rec$ python3 app.py
+```
+user@computer:/game_rec$ python3※ app.py
 * Serving Flask app 'app'
 * Debug mode: on
 WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
@@ -54,9 +71,10 @@ Press CTRL+C to quit
 * Debugger is active!
 * Debugger PIN: xxx-xxx-xxx
 ```
+※conda環境ではpython
 
 ここまで出来たら，あとは適当なユーザ名とパスワードでサインアップをしてからログインをしてください．
 
 ### 参考文献
 - [Flask本格入門 ～やさしくわかるWebアプリ開発～](https://www.amazon.co.jp/Flask%E6%9C%AC%E6%A0%BC%E5%85%A5%E9%96%80-%EF%BD%9E%E3%82%84%E3%81%95%E3%81%97%E3%81%8F%E3%82%8F%E3%81%8B%E3%82%8BWeb%E3%82%A2%E3%83%97%E3%83%AA%E9%96%8B%E7%99%BA%EF%BD%9E-%E6%A0%AA%E5%BC%8F%E4%BC%9A%E7%A4%BE%E3%83%95%E3%83%AB%E3%83%8D%E3%82%B9-%E6%A8%B9%E4%B8%8B%E9%9B%85%E7%AB%A0-ebook/dp/B0CDZZYK3H)
-    
+- [Pythonの仮想環境について【初心者向けの記事】](https://zenn.dev/40_comeback_eng/articles/4f09e6334c2e1e)
